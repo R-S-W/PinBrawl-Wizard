@@ -18,7 +18,8 @@ In the game, the player controls a wizard in a pinball machine who uses pinballs
 
 ## Wireframes
 <img width="1030" alt="Screen Shot 2021-04-05 at 5 53 31 AM" src="https://user-images.githubusercontent.com/73966827/113562175-a55e7080-95d3-11eb-831c-02f087bf0cc7.png">
-<img width="1038" alt="Screen Shot 2021-04-05 at 5 51 07 AM" src="https://user-images.githubusercontent.com/73966827/113562190-abece800-95d3-11eb-8848-8c8090acd348.png">
+<img width="1038" alt="Screen Shot 2021-04-05 at 5 51 07 AM" src="https://user-images.githubusercontent.com/73966827/113562190-abece800-95d3-11eb-8848-8c8090acd348.png">  
+
 ## Architecture and Technology
 - Javascript 
     * game.js - controls the entities on the board by moving them, drawing them, and managing object collisions.
@@ -28,7 +29,17 @@ In the game, the player controls a wizard in a pinball machine who uses pinballs
 
 ## Implementation Timeline
 
-Monday: 
+Monday:    Finish Pinball, Enemy, and Block entities and finish collisions, physics and basic game logic. 
+Tuesday:   Work on pinball effects, wizard, handle various game states (win, lose, start screen), figure out drag and drop
+Wednesday: Work on background, JS screens and modals
+Thursday:  add images to enemies and sprites to other entities
+Friday:    add finishing touches, animations
+
+## Bonuses 
+- Better animations
+- refined pinball effects 
+- better monster movement
+- better illustrations/sprites
 
 
 
