@@ -36,6 +36,7 @@ In the game, the player controls a wizard in a pinball machine who uses pinballs
 **Friday:**  add animations, sounds, finishing touches
 
 ## Bonuses 
+- Player's wizard can use bonus powers like fireball
 - Better animations
 - refined pinball effects 
 - better monster movement
