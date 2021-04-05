@@ -22,8 +22,24 @@ class Game {
 
   setupField(){
 
-    let leftRect = new Rectangle(30,50,40,20,-Math.PI/4);
+    
+    let leftCircle = new Circle(.3*this.DIM_X, .2*this.DIM_Y, 50);
+    this.blocks.push(leftCircle);
+    let rightCircle = new Circle(.7*this.DIM_X, .2*this.DIM_Y, 50);
+    this.blocks.push(rightCircle);
+    
+    
+    let leftRect = new Rectangle(.25*this.DIM_X+20, .50*this.DIM_Y, 240, 40,Math.PI/4);
     this.blocks.push(leftRect);
+
+    let rightRect = new Rectangle(.75*this.DIM_X-20, .50*this.DIM_Y, 240, 40,-Math.PI/4);
+    this.blocks.push(rightRect);
+
+
+    let leftCornerRect = new Rectangle(0,.85*this.DIM_Y, 400,300, .9*Math.PI/4);
+    let rightCornerRect = new Rectangle(this.DIM_X,this.DIM_Y*.85, 400,300, - .9*Math.PI/4);
+    this.blocks.push(leftCornerRect);
+    this.blocks.push(rightCornerRect);
 
 
     this.addEnemy();
@@ -58,8 +74,8 @@ class Game {
   draw(ctx){
     ctx.clearRect(0,0,this.DIM_X, this.DIM_Y);
 
-    // this.blocks.forEach((b)=>{b.draw(ctx)});
-    this.blocks[0].draw(ctx);
+    this.blocks.forEach((b)=>{b.draw(ctx)});
+    // this.blocks[0].draw(ctx);
     for (let i= 0 ; i< this.entities.length; i++){
       this.entities[i].draw(ctx);
     }

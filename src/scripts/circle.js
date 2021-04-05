@@ -9,6 +9,14 @@ class Circle  {
     this.radius = radius;
   }
 
+  draw(ctx){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.radius,0, Math.PI*2);
+    ctx.fillStyle  = '#636579';
+    ctx.fill();
+    ctx.closePath();
+  }
+
   isCollided(other){
     if (other instanceof Ball){
       return this.distance(this.x,this.y,other.x,other.y) < this.radius+other.radius    
