@@ -1,3 +1,5 @@
+import Rectangle from './rectangle';
+import Circle from './circle';
 import Ball from './ball';
 import Enemy from './enemy';
 
@@ -11,6 +13,13 @@ class Game {
     this.entities = [];
     
     this.timeVal;
+    this.setupField();
+
+    
+  }
+
+  setupField(){
+
 
     this.addEnemy();
     this.addEnemy();
@@ -18,8 +27,8 @@ class Game {
     this.addEnemy();
     this.addBall();
 
-    
   }
+
   addEnemy(){
     let angle = -Math.PI*Math.random();
     let vMag = 5;
@@ -52,7 +61,7 @@ class Game {
     this.entities.forEach((entity)=>{entity.move()})
   }
 
-  reflectEntities(){
+  reflectEntitiesOffWalls(){
     this.entities.forEach((e)=>{
       if ( e.y - e.dimY/2 < 0 ){
         e.y = e.dimY/2;

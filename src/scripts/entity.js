@@ -48,6 +48,15 @@ class Entity {
     return false;
   }
 
+  getVertices(){
+    return [
+      [this.x-this.dimX/2,this.y-this.dimY/2],
+      [this.x+this.dimX/2,this.y+this.dimY/2],
+      [this.x-this.dimX/2,this.y+this.dimY/2],
+      [this.x+this.dimX/2,this.y-this.dimY/2]
+    ]
+  }
+
 }
 
 

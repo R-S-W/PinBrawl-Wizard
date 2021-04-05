@@ -13,7 +13,7 @@ class GameView {
     
     this.game.moveEntities();
     this.game.draw(this.ctx);
-    this.game.reflectEntities();
+    this.game.reflectEntitiesOffWalls();
     this.game.checkCollisions();
 
     if (!this.timeVal) this.timeVal = timestamp;
