@@ -30,14 +30,44 @@ ctx.closePath();
 
 let x = canvas.width/2;
 let y = canvas.height - 30;
-let dx = 10;
-let dy = -15;
+let dx = 4;
+let dy = -10;
 let  stepStart;
+
+let runGame = true;
 
 
 let ballRadius = 10;
 
-//STOP Save this into a branch this is sick!
+
+let paddleHeight = 10;
+let paddleWidth = 75;
+let paddleX= (canvas.width - paddleWidth)/2;
+let rightPressed = false;
+let leftPressed = false;
+let  dxPaddle = 7;
+
+
+
+
+let brickRowCount =3;
+let brickColumnCount = 5;
+let brickWidth = 75;
+let brickHeight = 20;
+let brickPadding = 10;
+let brickOffsetTop = 30;
+let brickOffsetLeft = 30;
+
+let bricks = [];
+for (let i = 0; i< brickRowCount; i++){
+  bricks[i] = [];
+  for (let j = 0; j< brickColumnCount; j++){
+    bricks[i][j] = {x:0,y:0};
+  }
+}
+
+
+
 
 const step = (timestamp)=>{
   if (!stepStart){
@@ -46,15 +76,25 @@ const step = (timestamp)=>{
   const t = timestamp - stepStart;
   
   if (t < 500000){ 
-    // ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     drawBall(t,x,y);
     reflectEntities(x,y,[ballRadius,ballRadius]);
     x+=dx;
     y+=dy;
-    window.requestAnimationFrame(step);
+    if (runGame) window.requestAnimationFrame(step);
+
+
+    if(rightPressed && paddleX + dxPaddle< canvas.width-paddleWidth) paddleX += dxPaddle;
+    else if (leftPressed && paddleX- dxPaddle > 0) paddleX-=dxPaddle;
+    drawPaddle();
+    drawBricks();
+
   }
 
 }
+
+
+
 
 
 
@@ -69,12 +109,65 @@ const drawBall = (t,x,y)=>{
 }
 
 
+const drawPaddle = ()=>{
+  ctx.beginPath();
+  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+  ctx.fillStyle = "#0095DD"
+  ctx.fill();
+  ctx.closePath();
+}
+
+const drawBricks = ()=>{
+  for (let c = 0; c< brickColumnCount; c++){
+    for (let r =0; r< brickRowCount; r++){
+      var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+      var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+      bricks[c][r].x = brickX;
+      bricks[c][r].y = brickY;
+      ctx.beginPath();
+      ctx.rect(brickX, brickY, brickWidth, brickHeight);
+      ctx.fillStyle = "#0095DD";
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
+}
+
 const reflectEntities = (x,y,entityDim)=>{
   let ex = entityDim[0]/2;
   let ey= entityDim[1]/2;
-  if ( (y < 0 + ey) || (y > canvas.height - ey) )    dy = -dy;
+  if ( (y < 0 + ey) )    dy = -dy;
+  else if (y > canvas.height - ey) {
+    y = 20;
+    alert("GAME OVER");
+    document.location.reload();
+    // window.cancelAnimationFrame(frame);
+    runGame = false;
+
+  }
   if ( (x<0 + ex)  || (x>canvas.width - ex) ) dx = -dx;
 }
 
 
-window.requestAnimationFrame(step)
+const handleKeyDown  = (e)=>{
+  if (e.key == 'Right' || e.key == 'ArrowRight'){
+    rightPressed =true;
+  }
+  if (e.key ==='Left' || e.key === 'ArrowLeft') leftPressed = true;
+}
+
+const handleKeyUp = (e)=>{
+  if (e.key == 'Right' || e.key == 'ArrowRight'){
+    rightPressed =false;
+  }
+  if (e.key ==='Left' || e.key === 'ArrowLeft') leftPressed = false;
+}
+
+
+
+
+
+document.addEventListener('keydown', handleKeyDown, false);
+document.addEventListener('keyup', handleKeyUp, false);
+
+let frame = window.requestAnimationFrame(step)
