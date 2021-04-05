@@ -30,9 +30,9 @@ In the game, the player controls a wizard in a pinball machine who uses pinballs
 ## Implementation Timeline
 
 **Monday:**  Finish Pinball and Enemy entities, populate field with simple shapes, and work on collisions, physics and basic game logic.  
-**Tuesday:**  Work on pinball flippers and wizard, handle various game states (win, lose, start screen), style entities
-**Wednesday:**  Style background, JS screens and modals, add sounds/effects
-**Thursday:**  complete styling entities and background and CSS, make pinball bumpers
+**Tuesday:**  Work on pinball flippers and wizard, handle various game states (win, lose, start screen), style entities  
+**Wednesday:**  Style background, JS screens and modals, add sounds/effects  
+**Thursday:**  complete styling entities and background and CSS, make pinball bumpers  
 **Friday:**  make blocks drag and drop images, add 1 pinball rocket effect/add animations if time allows, do finishing touches
 
 ## Bonuses 
