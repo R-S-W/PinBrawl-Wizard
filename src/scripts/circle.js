@@ -2,7 +2,7 @@ import Ball from './ball';
 import Enemy from './enemy';
 
 
-class Circle extends shape {
+class Circle  {
   constructor(x,y,radius){
     this.x = x;
     this.y = y;

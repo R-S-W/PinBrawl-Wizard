@@ -4,6 +4,7 @@ import Ball from './ball';
 import Enemy from './enemy';
 
 
+
 class Game {
   
   constructor(){
@@ -11,6 +12,7 @@ class Game {
     this.DIM_Y = 680;
     this.NUM_MAX_ENEMIES = 20;
     this.entities = [];
+    this.blocks = [];
     
     this.timeVal;
     this.setupField();
@@ -19,6 +21,9 @@ class Game {
   }
 
   setupField(){
+
+    let leftRect = new Rectangle(30,50,40,20,-Math.PI/4);
+    this.blocks.push(leftRect);
 
 
     this.addEnemy();
@@ -52,6 +57,9 @@ class Game {
 
   draw(ctx){
     ctx.clearRect(0,0,this.DIM_X, this.DIM_Y);
+
+    // this.blocks.forEach((b)=>{b.draw(ctx)});
+    this.blocks[0].draw(ctx);
     for (let i= 0 ; i< this.entities.length; i++){
       this.entities[i].draw(ctx);
     }

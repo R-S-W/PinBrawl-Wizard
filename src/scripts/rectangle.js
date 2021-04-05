@@ -1,4 +1,4 @@
-
+import {multiply, rotationMatrix} from 'mathjs';
 import Circle from './circle';
 
 class Rectangle {
@@ -9,16 +9,37 @@ class Rectangle {
     this.length = length;
     this.angle= angle;
     
-    let bl = Math.multiply(Math.rotationMatrix(angle) , [this.x-this.dimX/2, this.y-this.dimY/2]);
-    let br = Math.multiply(Math.rotationMatrix(angle) , [this.x+this.dimX/2, this.y-this.dimY/2]);
-    let tl = Math.multiply(Math.rotationMatrix(angle) , [this.x-this.dimX/2, this.y+this.dimY/2]);
-    let tr = Math.multiply(Math.rotationMatrix(angle) , [this.x+this.dimX/2, this.y+this.dimY/2]);
+    let bl = multiply(rotationMatrix(angle) , [this.x-this.dimX/2, this.y-this.dimY/2]);
+    let br = multiply(rotationMatrix(angle) , [this.x+this.dimX/2, this.y-this.dimY/2]);
+    let tl = multiply(rotationMatrix(angle) , [this.x-this.dimX/2, this.y+this.dimY/2]);
+    let tr = multiply(rotationMatrix(angle) , [this.x+this.dimX/2, this.y+this.dimY/2]);
     bl = [bl[0]+this.x, bl[1]+this.y];
     br = [br[0]+this.x, br[1]+this.y];
     tl = [tl[0]+this.x, tl[1]+this.y];
     tr = [tr[0]+this.x, tr[1]+this.y];
     this.verts = [tr,tl,bl,br];
   }
+
+  draw(ctx){
+    //this.x and this.y is the center of the rectangle.
+    ctx.translate(this.x,this.y);
+    ctx.rotate(this.angle);
+    ctx.translate(-this.x,-this.y);
+
+    ctx.beginPath();
+    ctx.rect(this.x-this.width/2, this.y-this.length/2, this.width, this.length);
+    ctx.fillStyle ='#636579';
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.translate(this.x,this.y);
+    ctx.rotate(-this.angle);
+    ctx.translate(-this.x, -this.y);
+  }
+
+
+  move(){}
+
 
   isCollidedWith(other){
 
