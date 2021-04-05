@@ -33,7 +33,7 @@ In the game, the player controls a wizard in a pinball machine who uses pinballs
 **Tuesday:**  Work on pinball effects, wizard, handle various game states (win, lose, start screen), figure out drag and drop  
 **Wednesday:**  Work on background, JS screens and modals  
 **Thursday:**  add images to enemies and sprites to other entities  
-**Friday:**  add finishing touches, animations  
+**Friday:**  add animations, sounds, finishing touches
 
 ## Bonuses 
 - Better animations
