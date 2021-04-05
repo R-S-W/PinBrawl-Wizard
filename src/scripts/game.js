@@ -22,6 +22,8 @@ class Game {
 
   setupField(){
 
+
+    // this.blocks.push(new Rectangle(this.DIM_X/2, this.DIM_Y/2, 150,150, Math.PI/4))
     
     let leftCircle = new Circle(.3*this.DIM_X, .2*this.DIM_Y, 50);
     this.blocks.push(leftCircle);
@@ -43,16 +45,16 @@ class Game {
 
 
     this.addEnemy();
-    this.addEnemy();
-    this.addEnemy();
-    this.addEnemy();
-    this.addBall();
+    // this.addEnemy();
+    // this.addEnemy();
+    // this.addEnemy();
+    // this.addBall();
 
   }
 
   addEnemy(){
     let angle = -Math.PI*Math.random();
-    let vMag = 5;
+    let vMag = 2;
     let vx = vMag*Math.cos(angle);
     let vy = -vMag*Math.sin(angle);
     let enemy = new Enemy(Math.round(20+ (this.DIM_X-25)*Math.random()),20/2,vx,vy,20,20);
@@ -107,6 +109,16 @@ class Game {
 
   checkCollisions(){
     let deleteIndex = -1;
+
+    for (let g = 0; g< this.entities.length; g++ ){
+      for (let h =0; h< this.blocks.length; h++){
+        if (this.blocks[h].isCollidedWith(this.entities[g])){
+          console.log(`Collision with ${typeof this.blocks[h]}`);
+        }
+      }
+    }
+
+
     for (let i = 1; i< this.entities.length; i++){
       for (let j = 0 ; j< i; j++){
         if (this.entities[i].isCollidedWith(this.entities[j])){

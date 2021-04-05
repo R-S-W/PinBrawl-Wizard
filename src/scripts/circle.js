@@ -17,14 +17,17 @@ class Circle  {
     ctx.closePath();
   }
 
-  isCollided(other){
+  isCollidedWith(other){
+    // console.log('c')
     if (other instanceof Ball){
+      // console.log('b')
       return this.distance(this.x,this.y,other.x,other.y) < this.radius+other.radius    
     }else if (other instanceof Enemy){
+      // console.log('e')
       // This is a simple calculation and good for small enemies and big circles.
-      let verts = Enemy.getVertices();
+      let verts = other.getVertices();
       for (let i = 0; i< verts.length; i++){
-        if (isInside(verts)) return true;
+        if (this.isInside(verts[i])) return true;
       }
       return false;
     }

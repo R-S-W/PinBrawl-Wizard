@@ -1,5 +1,7 @@
 import {multiply, rotationMatrix} from 'mathjs';
 import Circle from './circle';
+import Ball from './ball';
+import Enemy from './enemy';
 
 class Rectangle {
   constructor(x,y,width,length, angle = 0){
@@ -9,10 +11,11 @@ class Rectangle {
     this.length = length;
     this.angle= angle;
     
-    let bl = multiply(rotationMatrix(angle) , [this.x-this.dimX/2, this.y-this.dimY/2]);
-    let br = multiply(rotationMatrix(angle) , [this.x+this.dimX/2, this.y-this.dimY/2]);
-    let tl = multiply(rotationMatrix(angle) , [this.x-this.dimX/2, this.y+this.dimY/2]);
-    let tr = multiply(rotationMatrix(angle) , [this.x+this.dimX/2, this.y+this.dimY/2]);
+    let bl = multiply(rotationMatrix(angle) , [-this.width/2, -this.length/2])._data;
+    let br = multiply(rotationMatrix(angle) , [+this.width/2, -this.length/2])._data;
+    let tl = multiply(rotationMatrix(angle) , [-this.width/2, +this.length/2])._data;
+    let tr = multiply(rotationMatrix(angle) , [+this.width/2, +this.length/2])._data;
+    
     bl = [bl[0]+this.x, bl[1]+this.y];
     br = [br[0]+this.x, br[1]+this.y];
     tl = [tl[0]+this.x, tl[1]+this.y];
@@ -70,14 +73,17 @@ class Rectangle {
 
   }
 
-  isInside(point){
+  isInside(p){
+    let point = new Array(...p);
+    // console.log(point);
     point[0]-=this.x;
     point[1]-=this.y;
-    point = Math.multiply(Math.rotationMatrix(-angle),point);
-    if (-this.dimX/2 <= point[0] 
-      && point[0] <= this.dimX/2
-      && -this.dimY/2 <= point[1]
-      && point[1] <= this.dimY/2 ){
+    point = multiply(rotationMatrix(-this.angle),point)._data;
+    // console.log(point)
+    if (-this.width/2 <= point[0] 
+      && point[0] <= this.width/2
+      && -this.length/2 <= point[1]
+      && point[1] <= this.length/2 ){
         return true;
     }
     return false;
