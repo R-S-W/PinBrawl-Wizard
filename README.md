@@ -17,8 +17,8 @@ In the game, the player controls a wizard in a pinball machine who uses pinballs
 - Music
 
 ## Wireframes
-
-
+<img width="1030" alt="Screen Shot 2021-04-05 at 5 53 31 AM" src="https://user-images.githubusercontent.com/73966827/113562175-a55e7080-95d3-11eb-831c-02f087bf0cc7.png">
+<img width="1038" alt="Screen Shot 2021-04-05 at 5 51 07 AM" src="https://user-images.githubusercontent.com/73966827/113562190-abece800-95d3-11eb-8848-8c8090acd348.png">
 ## Architecture and Technology
 - Javascript 
     * game.js - controls the entities on the board by moving them, drawing them, and managing object collisions.
@@ -27,4 +27,12 @@ In the game, the player controls a wizard in a pinball machine who uses pinballs
 - Drag and Drop API - to add enemies to the game
 
 ## Implementation Timeline
+
+Monday: 
+
+
+
+
+
+
 
