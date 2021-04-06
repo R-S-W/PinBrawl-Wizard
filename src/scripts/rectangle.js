@@ -36,10 +36,10 @@ class Rectangle {
     this.length = length;
     this.angle= angle;
     
-    let bl = multiply(rotationMatrix(angle) , [-this.width/2, -this.length/2])._data;
-    let br = multiply(rotationMatrix(angle) , [+this.width/2, -this.length/2])._data;
-    let tl = multiply(rotationMatrix(angle) , [-this.width/2, +this.length/2])._data;
-    let tr = multiply(rotationMatrix(angle) , [+this.width/2, +this.length/2])._data;
+    let bl = multiply(rotationMatrix(angle) , [-this.width/2, +this.length/2])._data;
+    let br = multiply(rotationMatrix(angle) , [+this.width/2, +this.length/2])._data;
+    let tl = multiply(rotationMatrix(angle) , [-this.width/2, -this.length/2])._data;
+    let tr = multiply(rotationMatrix(angle) , [+this.width/2, -this.length/2])._data;
     
     
     bl = [bl[0]+this.x, bl[1]+this.y];
@@ -48,10 +48,10 @@ class Rectangle {
     tr = [tr[0]+this.x, tr[1]+this.y];
     this.verts = [tr,tl,bl,br];
     
-    let trA = Math.atan(this.length/this.width);
-    let tlA = -trA+ Math.PI;
-    let blA = trA- Math.PI;
-    let brA = -trA;
+    let brA = Math.atan(this.length/this.width);
+    let trA = -brA;
+    let tlA = brA- Math.PI;
+    let blA = Math.PI-brA;
     this.vertAngles = [trA, tlA,blA,brA];
     
   }
@@ -93,21 +93,23 @@ class Rectangle {
     let side = '';
     let lineVerts = [];
     let normAngle;
-    if (this.vertAngles[3] <oAngle && oAngle < this.vertAngles[0]){
+
+
+    if (this.vertAngles[3] > oAngle && oAngle > this.vertAngles[0]){
       side = 'r';
       normAngle = 0;
       // lineVerts = [this.verts[3],this.verts[0]];
-    }else if (this.vertAngles[0]< oAngle && oAngle< this.vertAngles[1]){
+    }else if (this.vertAngles[0] > oAngle && oAngle > this.vertAngles[1]){
       side = 't';
-      normAngle = Math.PI/2;
+      normAngle = -Math.PI/2;
       // lineVerts = [this.verts[0],this.verts[1]];
-    }else if (this.vertAngles[1]< oAngle && oAngle< this.vertAngles[2]){
+    }else if ((this.vertAngles[1] > oAngle ) || (oAngle > this.vertAngles[2] )){
       side = 'l';
       normAngle = Math.PI;
       // lineVerts = [this.verts[1],this.verts[2]];
     }else {
       side = 'b';
-      normAngle= -Math.PI/2;
+      normAngle= Math.PI/2;
       // lineVerts = [this.verts[2],this.verts[3]];
     }
     
@@ -116,10 +118,13 @@ class Rectangle {
     let a = Math.cos(normAngle);
     let b = Math.sin(normAngle);
     let reflectionMatrix = matrix([[1-2*a**2, -2*a*b],[-2*a*b, 1-2*b**2]]);
-    [other.vx, other.vy] =   multiply(reflectionMatrix, [other.vx,other.vy])._data;
+    let newVelocity =   multiply(reflectionMatrix, [other.vx,other.vy])._data;
 
-    other.x += a*other.dimX*.7;
-    other.y += b*other.dimY*.7;
+    other.vx = newVelocity[0] ; 
+    other.vy = newVelocity[1] ;
+
+    other.x += a*other.dimX*.5;
+    other.y += b*other.dimY*.5;
 
   }
 

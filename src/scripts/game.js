@@ -45,10 +45,10 @@ class Game {
     this.blocks.push(rightCornerRect);
 
 
-    this.addEnemy();
-    this.addEnemy();
-    this.addEnemy();
-    this.addEnemy();
+    // this.addEnemy();
+    // this.addEnemy();
+    // this.addEnemy();
+    // this.addEnemy();
     this.addBall();
 
   }
