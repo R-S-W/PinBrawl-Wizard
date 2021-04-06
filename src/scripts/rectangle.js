@@ -88,7 +88,7 @@ class Rectangle {
     if (distV[1]>0 && distV[0] < 0) oAngle+=Math.PI;
     if (distV[1] < 0 && distV[0]< 0) oAngle -= Math.PI
     
-    debugger
+    // debugger
     oAngle = makeAngleInBounds(oAngle-this.angle); //bring angle to the reference frame of the unrotated rectangle
     let side = '';
     let lineVerts = [];
@@ -123,8 +123,8 @@ class Rectangle {
     other.vx = newVelocity[0] ; 
     other.vy = newVelocity[1] ;
 
-    other.x += a*other.dimX*.5;
-    other.y += b*other.dimY*.5;
+    other.x += a*other.dimX*.2;
+    other.y += b*other.dimY*.2;
 
   }
 

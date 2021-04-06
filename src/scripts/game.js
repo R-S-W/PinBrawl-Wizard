@@ -2,6 +2,7 @@ import Rectangle from './rectangle';
 import Circle from './circle';
 import Ball from './ball';
 import Enemy from './enemy';
+import Flipper from './flipper';
 
 
 
@@ -13,6 +14,7 @@ class Game {
     this.NUM_MAX_ENEMIES = 20;
     this.entities = [];
     this.blocks = [];
+    this.flippers = [];
     
     this.timeVal;
     this.setupField();
@@ -45,11 +47,18 @@ class Game {
     this.blocks.push(rightCornerRect);
 
 
-    // this.addEnemy();
-    // this.addEnemy();
-    // this.addEnemy();
-    // this.addEnemy();
-    this.addBall();
+
+    let leftFlipper = new Flipper(400,600,'ccw', Math.PI/6);
+    this.flippers.push(leftFlipper);
+
+
+
+    this.addEnemy();
+    this.addEnemy();
+    this.addEnemy();
+    this.addEnemy();
+    // this.addBall();
+    
 
   }
 
@@ -78,6 +87,7 @@ class Game {
     ctx.clearRect(0,0,this.DIM_X, this.DIM_Y);
 
     this.blocks.forEach((b)=>{b.draw(ctx)});
+    this.flippers.forEach((flipper)=>{flipper.draw(ctx)})
     // this.blocks[0].draw(ctx);
     for (let i= 0 ; i< this.entities.length; i++){
       this.entities[i].draw(ctx);
@@ -85,6 +95,7 @@ class Game {
   }
 
   moveEntities(){
+    this.flippers.forEach((flipper)=>{flipper.move()})
     this.entities.forEach((entity)=>{entity.move()})
   }
 
@@ -123,6 +134,16 @@ class Game {
       }
     }
 
+
+    for (let h=0; h< this.flippers.length;h++){
+      this.entities.forEach((e)=>{
+        if (this.flippers[h].isCollidedWith(e)){
+          console.log('Collided with flipper')
+        }
+      });
+    } 
+
+
     //Entity-Entity Collisions
     for (let i = 1; i< this.entities.length; i++){
       for (let j = 0 ; j< i; j++){
@@ -144,5 +165,14 @@ class Game {
     if (deleteIndex !== -1)  this.entities.splice(deleteIndex,1);
   }
 
+
+
+  // makeCanvasBackground(ctx){
+  //   let backgroundImage=  new Image();
+  //   backgroundImage.src = 'src/images/grass.png';
+  //   backgroundImage.onload = ()=>{
+  //     ctx.drawImage(backgroundImage, 0,0);
+  //   }
+  // }
 }
 export default Game;
