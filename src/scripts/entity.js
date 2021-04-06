@@ -27,6 +27,8 @@ class Entity {
     this.y += this.vy;
   }
 
+  handleCollision(){}
+
   isCollidedWith(otherEntity){
     if ( this.isInside([otherEntity.x - otherEntity.dimX/2, otherEntity.y - otherEntity.dimY/2])
       || this.isInside([otherEntity.x + otherEntity.dimX/2, otherEntity.y - otherEntity.dimY/2])

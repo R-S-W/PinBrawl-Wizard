@@ -1,5 +1,23 @@
 import Ball from './ball';
 import Enemy from './enemy';
+import {multiply, matrix} from 'mathjs';
+
+
+
+
+
+function distance(ax, ay,bx,by){
+  return ((ax-bx)**2+(ay-by)**2)**.5
+}
+
+
+
+function normalizeVector(a){
+  let s = 0;
+  a.forEach((el)=>{s+=el**2});
+  s = s**.5;
+  return a.map((el)=>(el/s));
+}
 
 
 class Circle  {
@@ -17,11 +35,27 @@ class Circle  {
     ctx.closePath();
   }
 
+
+  handleCollision(other){
+
+    let a;
+    let b;
+    let distAB = distance(this.x, this.y, other.x, other.y);
+    [a,b] = [(other.x-this.x)/distAB, (other.y-this.y)/distAB];
+    let reflectionMatrix = matrix([[1-2*a**2, -2*a*b],[-2*a*b, 1-2*b**2]]);
+    [other.vx, other.vy] = multiply(reflectionMatrix, [other.vx, other.vy])._data;
+
+    other.x += a*other.dimX/2;
+    other.y += b*other.dimX/2;
+
+  }
+
+
   isCollidedWith(other){
     // console.log('c')
     if (other instanceof Ball){
       // console.log('b')
-      return this.distance(this.x,this.y,other.x,other.y) < this.radius+other.radius    
+      return distance(this.x,this.y,other.x,other.y) < this.radius+other.radius    
     }else if (other instanceof Enemy){
       // console.log('e')
       // This is a simple calculation and good for small enemies and big circles.
@@ -34,12 +68,11 @@ class Circle  {
     
   }
   isInside(point){
-    return (this.distance(point[0], point[1], this.x,this.y) < this.radius) ? true : false;
+    return (distance(point[0], point[1], this.x,this.y) < this.radius) ? true : false;
   }
 
-  distance(ax, ay,bx,by){
-    return ((ax-bx)**2+(ay-by)**2)**.5
-  }
 }
 
 export default Circle;
+
+

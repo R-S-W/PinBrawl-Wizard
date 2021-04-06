@@ -111,15 +111,19 @@ class Game {
   checkCollisions(){
     let deleteIndex = -1;
 
+    //Block-Entity Collisions
     for (let g = 0; g< this.entities.length; g++ ){
       for (let h =0; h< this.blocks.length; h++){
         if (this.blocks[h].isCollidedWith(this.entities[g])){
-          console.log(`Collision with ${typeof this.blocks[h]}`);
+          // console.log(`Collision with ${typeof this.blocks[h]}`);
+          this.blocks[h].handleCollision(this.entities[g]);
+          this.entities[g].handleCollision();
+
         }
       }
     }
 
-
+    //Entity-Entity Collisions
     for (let i = 1; i< this.entities.length; i++){
       for (let j = 0 ; j< i; j++){
         if (this.entities[i].isCollidedWith(this.entities[j])){

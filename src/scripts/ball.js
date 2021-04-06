@@ -27,6 +27,12 @@ class Ball extends Entity {
     this.x += this.vx;
     this.y =Math.round(this.y+this.vy);
   }
+
+  handleCollision(){
+    let damper= .95;
+    this.vx *=damper;
+    this.vy *= damper;
+  }
 }
 export default Ball;
 
