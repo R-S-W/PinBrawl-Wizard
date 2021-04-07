@@ -1,23 +1,7 @@
 import Ball from './ball';
 import Enemy from './enemy';
 import {multiply, matrix} from 'mathjs';
-
-
-
-
-
-function distance(ax, ay,bx,by){
-  return ((ax-bx)**2+(ay-by)**2)**.5
-}
-
-
-
-function normalizeVector(a){
-  let s = 0;
-  a.forEach((el)=>{s+=el**2});
-  s = s**.5;
-  return a.map((el)=>(el/s));
-}
+import {distance} from './math_utils';
 
 
 class Circle  {
@@ -37,7 +21,6 @@ class Circle  {
 
 
   handleCollision(other){
-
     let a;
     let b;
     let distAB = distance(this.x, this.y, other.x, other.y);

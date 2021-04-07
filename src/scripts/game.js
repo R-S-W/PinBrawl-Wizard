@@ -11,7 +11,7 @@ class Game {
   constructor(){
     this.DIM_X = 700;
     this.DIM_Y = 680;
-    this.NUM_MAX_ENEMIES = 20;
+    this.NUM_MAX_ENEMIES = 10;
     this.entities = [];
     this.blocks = [];
     this.flippers = [];
@@ -48,15 +48,20 @@ class Game {
 
 
 
-    let leftFlipper = new Flipper(400,600,'ccw', Math.PI/6);
+    let leftFlipper = new Flipper(.35*this.DIM_X-30,600,'ccw', Math.PI/6);
     this.flippers.push(leftFlipper);
 
 
 
+
+    // this.addEnemy();
+    // this.addEnemy();
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
+    this.addTestEnemy();
+
     // this.addBall();
     
 
@@ -70,13 +75,16 @@ class Game {
     let enemy = new Enemy(Math.round(20+ (this.DIM_X-25)*Math.random()),20/2,vx,vy,20,20);
     this.entities.push(enemy);
   }
+  addTestEnemy(){
+    this.entities.push(new Enemy(.4*this.DIM_X, .6*this.DIM_Y, 0, 1, 23,23));
+  }
 
   addBall(){
     let angle = Math.PI*2*Math.random();
     let vMag = 6;
     let vx = vMag*Math.cos(angle);
     let vy = vMag*Math.sin(angle);
-    let x = this.DIM_X/2;
+    let x = this.DIM_X*.4;
     let y = this.DIM_Y/2;
     let ball = new Ball(x,y,vx,vy,10,'#0095DD');
     this.entities.push(ball);
@@ -134,11 +142,13 @@ class Game {
       }
     }
 
-
+    //Flipper collisions
     for (let h=0; h< this.flippers.length;h++){
       this.entities.forEach((e)=>{
         if (this.flippers[h].isCollidedWith(e)){
           console.log('Collided with flipper')
+          this.flippers[h].handleCollision(e);
+          
         }
       });
     } 
@@ -148,7 +158,6 @@ class Game {
     for (let i = 1; i< this.entities.length; i++){
       for (let j = 0 ; j< i; j++){
         if (this.entities[i].isCollidedWith(this.entities[j])){
-          console.log('Collision');
 
           if (this.entities[i] instanceof Ball){
             deleteIndex = j;

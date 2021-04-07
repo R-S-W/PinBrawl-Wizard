@@ -1,6 +1,7 @@
 import Circle from './circle';
 import Rectangle from './rectangle';
-import {multiply,rotationMatrix} from 'mathjs';
+import {add, multiply,rotationMatrix} from 'mathjs';
+import {makeAngleInBounds,  arcTangent, distance, reflectVector} from './math_utils';
 
 
 class Flipper {
@@ -15,13 +16,16 @@ class Flipper {
     this.color = '#9C1A00';
     this.startAngle = startAngle;
     this.angle = startAngle;
+    this.angleRange = Math.PI/6;
+    this.endAngle = this.startAngle-this.angleRange;
+    this.omega = -.1; // angular velocity
 
     this.shape = {
       baseCircle : new Circle(this.x,this.y,this.baseRadius),
       body : new Rectangle(this.x+ .5*this.bodyLength, this.y, this.bodyLength, this.edgeRadius*2),
-      edgeCircle : new Circle(this.x,this.y+this.bodyLength, this.edgeRadius)
+      edgeCircle : new Circle(this.x+this.bodyLength,this.y, this.edgeRadius)
     }
-    
+    this.damper = .5;
   }
   
   draw(ctx){
@@ -48,31 +52,66 @@ class Flipper {
 
 
   move(){
-    let oldAngle = this.angle;
+    if (this.oldAngle==undefined){
+      this.oldAngle = 0;
+      debugger
+    }else{
+      this.oldAngle = this.angle;
+    }
     
-    this.angle+=-.1;
+    // this.angle+=this.omega;
+    if (this.isTurnsClockwise && (key.isPressed('/') || key.isPressed('?')) ){
+      this.angle = this.endAngle;
+    }
+    else if (!this.isTurnsClockwise && (key.isPressed("z") || key.isPressed('Z') ) ){
+      this.angle = this.endAngle;
+    }else{
+      this.angle= this.startAngle;
+    }
 
-    let dAngle = this.angle-oldAngle;
-
-    for (const [key, s] of Object.entries(this.shape)) {
+    debugger
+    for (const s of Object.values(this.shape)) {
       s.x-=this.x;
       s.y-=this.y;
-
-      [s.x,s.y] = multiply(rotationMatrix(dAngle), [s.x,s.y])._data;
-
+      [s.x,s.y] = multiply(rotationMatrix(-this.oldAngle+this.angle ), [s.x,s.y])._data;
       s.x+=this.x;
       s.y+=this.y;
     }
-
   }
+
+
   isCollidedWith(other){
-
-
     let shapeList = Object.values(this.shape);
     for (let i = 0; i< 3; i++){
       if (shapeList[i].isCollidedWith(other)) return true;
     }
     return false;
   }
+
+  handleCollision(other){
+    //Find projection 
+    debugger
+
+    let relPos = [other.x- this.x, other.y-this.y];
+    let otherAngle = arcTangent(relPos);
+
+    let othersProjectionOnFlipper = distance(this.x,this.y, other.x, other.y ) * 
+      Math.cos( Math.abs(otherAngle - this.angle) );
+    let vBumpMag = this.damper * othersProjectionOnFlipper * this.omega;
+
+    let normalAngle = this.angle+Math.PI/2;
+    let normalVector = [Math.cos(normalAngle), Math.sin(normalAngle)];
+    let reflectedVelocity = reflectVector(normalVector, [other.vx, other.vy]);
+
+    [other.vx, other.vy] = add( [other.vx, other.vy], reflectedVelocity, multiply(normalVector,vBumpMag) )
+
+    other.x += normalVector[0]*2*other.dimX;
+    other.y += normalVector[1]*2*other.dimY;
+
+
+
+  }
+
+
 }
 export default Flipper;

@@ -17,7 +17,7 @@ class GameView {
     this.game.checkCollisions();
 
     if (!this.timeVal) this.timeVal = timestamp;
-    if (timestamp - this.timeVal > 10000){
+    if (this.game.entities.length < 12 && timestamp - this.timeVal > 10000){
       this.timeVal =0;
       this.game.addEnemy();
     }
@@ -28,6 +28,23 @@ class GameView {
   start(){
     
     window.requestAnimationFrame(this.step)
+  }
+
+  bindKeyHandlers(){
+
+
+  // Object.keys(GameView.MOVES).forEach(function(k)  {
+  //   const move = GameView.MOVES[k];
+  //   key(k, function () { ship.power(move); });
+  // });
+
+  // key( "z", ()=>{this.game.isLeftPressed = true});
+  // key( "/", ()=>{this.game.isRightPressed = true});
+  // key( "", ()=>{});
+
+  // key("space", function () { ship.fireBullet(); });
+
+
   }
 }
 export default GameView;

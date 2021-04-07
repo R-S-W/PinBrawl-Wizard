@@ -1,30 +1,8 @@
 import {add,multiply, cross,rotationMatrix, matrix} from 'mathjs';
+import {makeAngleInBounds, reflectVector} from './math_utils';
 import Circle from './circle';
 import Ball from './ball';
 import Enemy from './enemy';
-
-
-
-
-
-
-function distance(ax, ay,bx,by){
-  return ((ax-bx)**2+(ay-by)**2)**.5
-}
-
-function normalizeVector(a){
-  let s = 0;
-  a.forEach((el)=>{s+=el**2});
-  s = s**.5;
-  return a.map((el)=>(el/s));
-}
-
-function makeAngleInBounds(angle){
-  if (angle > Math.PI) return angle - 2*Math.PI;
-  else if (angle < -Math.PI) return angle + 2*Math.PI;
-  return angle;
-}
-
 
 
 
@@ -117,8 +95,7 @@ class Rectangle {
     //normal vector components a and b 
     let a = Math.cos(normAngle);
     let b = Math.sin(normAngle);
-    let reflectionMatrix = matrix([[1-2*a**2, -2*a*b],[-2*a*b, 1-2*b**2]]);
-    let newVelocity =   multiply(reflectionMatrix, [other.vx,other.vy])._data;
+    let newVelocity =   reflectVector([a,b], [other.vx, other.vy]);
 
     other.vx = newVelocity[0] ; 
     other.vy = newVelocity[1] ;
