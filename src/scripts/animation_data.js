@@ -1,10 +1,12 @@
 
 
 class AnimationData {
-  constructor(numFrames){
+  constructor(numFrames, type){
     this.numFrames = numFrames;
     this.frameIdx = 0;
     this.itr = 1;
+    this.isAutoReset = type === 'reset';
+    this.isAutoReverse = type === 'reverse';
   }
 
   go(){
@@ -13,8 +15,11 @@ class AnimationData {
     ){
       this.frameIdx += this.itr;
     }
+    
+    if (this.isComplete() && this.isAutoReset) this.reset();
+    else if (this.isComplete() && this.isAutoReverse) this.reverse(); 
   }
-  flip(){
+  reverse(){
     this.itr *=-1;
   }
 
@@ -26,6 +31,12 @@ class AnimationData {
     this.frameIdx = 0;
     this.itr=1;
   }
+
+  isComplete(){return (this.isAtStart() || this.isAtEnd())}
+
+  isAtStart(){return this.frameIdx === 0;}
+
+  isAtEnd(){return this.frameIdx === this.numFrames;}
 
   fractionCompleted(){
     return this.frameIdx/this.numFrames;

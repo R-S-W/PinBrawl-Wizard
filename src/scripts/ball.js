@@ -25,7 +25,7 @@ class Ball extends Entity {
   }
 
   handleCollision(){
-    let damper= (  .9  )**.5;
+    let damper= (  .7  )**.5;
     this.vx *=damper;
     this.vy *= damper;
   }

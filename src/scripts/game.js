@@ -3,6 +3,8 @@ import Circle from './circle';
 import Ball from './ball';
 import Enemy from './enemy';
 import Flipper from './flipper';
+import Sound from './sound';
+import { e } from 'mathjs';
 
 
 
@@ -17,18 +19,38 @@ class Game {
     this.flippers = [];
     
     this.timeVal;
+    this.setupAssets();
     this.setupField();
+    
+
     this.successfulEnemiesCount = 0;
 
     
   }
 
+  setupAssets(){
+
+
+
+
+    let explosion = new Sound('./src/audio/explosion.mp3', .6);
+    let creeper_win = new Sound('./src/audio/creeper_win.mp3');
+    explosion.play();
+
+
+
+    this.sounds = {explosion, creeper_win}
+  }
+
   setupField(){
+
 
 
     // this.blocks.push(new Rectangle(this.DIM_X/2, this.DIM_Y/2, 150,150, Math.PI/4))
     // this.blocks.push(new Circle(this.DIM_X/2, this.DIM_Y*.9, 30))
     
+
+    //Blocks___________________________
     let leftCircle = new Circle(.3*this.DIM_X, .2*this.DIM_Y, 50);
     this.blocks.push(leftCircle);
     let rightCircle = new Circle(.7*this.DIM_X, .2*this.DIM_Y, 50);
@@ -48,6 +70,7 @@ class Game {
     this.blocks.push(rightCornerRect);
 
 
+    //Flippers______________________
     let flipperXCenterOffset = 135;
     let flipperYCenterOffset = 260;
 
@@ -69,7 +92,7 @@ class Game {
 
 
 
-
+    //Entities_____________________
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
@@ -78,7 +101,8 @@ class Game {
     // this.addEnemy();
     this.addTestEnemy();
 
-    this.addBall();
+    // this.addBall();
+    
     
 
   }
@@ -88,8 +112,52 @@ class Game {
     let vMag = 2;
     let vx = vMag*Math.cos(angle);
     let vy = -vMag*Math.sin(angle);
-    let enemy = new Enemy(Math.round(20+ (this.DIM_X-25)*Math.random()),20/2,vx,vy,20,20);
-    this.entities.push(enemy);
+    let creeper = new Enemy(
+      Math.round(20+ (this.DIM_X-25)*Math.random()),
+      20/2,
+      vx,
+      vy,
+      20,
+      40,
+      './src/images/creeper.png',
+      {
+        death: "explosion",
+        win: "creeper_win",
+      }
+      // 'explosion'
+    );
+    let kyubey = new Enemy(
+      Math.round(20+ (this.DIM_X-25)*Math.random()),
+      20/2,
+      vx,
+      vy,
+      40,
+      40,
+      './src/images/kyubey.png',
+      {
+        death: "explosion", 
+        win: 'creeper_win'
+      }
+    )
+
+    let js = new Enemy(
+       Math.round(20+ (this.DIM_X-25)*Math.random()),
+      20/2,
+      vx*3,
+      vy*3,
+      30,
+      30,
+      './src/images/js.png',
+      {
+        death:"explosion",
+        win: 'creeper_win'
+      }
+    )
+
+    let enemyArray = [creeper, kyubey, js];
+    let randIdx =Math.abs(Math.round(Math.random()*enemyArray.length-1));
+    debugger
+    this.entities.push(enemyArray[randIdx]);
   }
   addTestEnemy(){
     // this.entities.push(new Enemy(.4*this.DIM_X-15, .6*this.DIM_Y, 0, 1, 23,23));
@@ -139,6 +207,7 @@ class Game {
         }else if (e instanceof Enemy){
           this.successfulEnemiesCount++;
           indicesToDelete.unshift(idx);
+          if (e.soundNames)  this.sounds[e.soundNames.win].play();
         }
       }
     });
@@ -203,8 +272,10 @@ class Game {
 
           if (this.entities[i] instanceof Ball){
             deleteIndex = j;
+            if (this.entities[j].soundNames)  this.sounds[this.entities[j].soundNames.death].play();
           }else if (this.entities[j] instanceof Ball){
             deleteIndex = i;
+            if (this.entities[j].soundNames)  this.sounds[this.entities[j].soundNames.death].play();
           }else{
             let temp = this.entities[i].vx;
             this.entities[i].vx  = -this.entities[j].vx;
