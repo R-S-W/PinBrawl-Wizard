@@ -60,14 +60,12 @@ class Flipper {
     if (this.oldAngle==undefined){
       this.oldAngle = 0;
       oldFrame = 0;
-      // debugger
     }else{
       this.oldAngle = this.angle;
       oldFrame = this.flipAnimationData.frameIdx;
 
     }
     
-    // this.angle+=this.omega;
     if ( (this.isTurnsClockwise && (key.isPressed('/') || key.isPressed('?')) ) 
       || (!this.isTurnsClockwise && (key.isPressed("z") || key.isPressed('Z')) ) 
     ){
@@ -79,12 +77,11 @@ class Flipper {
     this.angle = this.startAngle - this.angleRange*this.flipAnimationData.fractionCompleted();      
     this.omega = this.dOmegaMag * (this.flipAnimationData.frameIdx - oldFrame);
     let dAngle = -this.oldAngle+this.angle;
-    // debugger
 
     if (Math.abs(dAngle) > .000001){
       for (const s of Object.values(this.shape)) {
         if (s instanceof Rectangle){
-          debugger
+          // debugger
           s.rotateOnPivot([this.x,this.y], dAngle);
         }else{
           s.x-=this.x;

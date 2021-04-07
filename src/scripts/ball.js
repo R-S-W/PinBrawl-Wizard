@@ -3,10 +3,6 @@ import Entity from './entity';
 class Ball extends Entity {
   constructor(x,y,vx,vy,radius,color){
     super(x,y,vx,vy);
-    // this.x = x;
-    // this.y = y;
-    // this.vx = vx;
-    // this.vy = vy;
     this.radius = radius;
     this.dimX = 2*radius;
     this.dimY = 2*radius;

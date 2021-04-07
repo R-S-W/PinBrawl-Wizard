@@ -31,8 +31,6 @@ class GameView {
   }
 
   bindKeyHandlers(){
-
-
   // Object.keys(GameView.MOVES).forEach(function(k)  {
   //   const move = GameView.MOVES[k];
   //   key(k, function () { ship.power(move); });
@@ -43,8 +41,6 @@ class GameView {
   // key( "", ()=>{});
 
   // key("space", function () { ship.fireBullet(); });
-
-
   }
 }
 export default GameView;

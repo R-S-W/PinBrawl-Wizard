@@ -66,7 +66,6 @@ class Rectangle {
     if (distV[1]>0 && distV[0] < 0) oAngle+=Math.PI;
     if (distV[1] < 0 && distV[0]< 0) oAngle -= Math.PI
     
-    // debugger
     oAngle = makeAngleInBounds(oAngle-this.angle); //bring angle to the reference frame of the unrotated rectangle
     let side = '';
     let lineVerts = [];
@@ -76,19 +75,15 @@ class Rectangle {
     if (this.vertAngles[3] > oAngle && oAngle > this.vertAngles[0]){
       side = 'r';
       normAngle = 0;
-      // lineVerts = [this.verts[3],this.verts[0]];
     }else if (this.vertAngles[0] > oAngle && oAngle > this.vertAngles[1]){
       side = 't';
       normAngle = -Math.PI/2;
-      // lineVerts = [this.verts[0],this.verts[1]];
     }else if ((this.vertAngles[1] > oAngle ) || (oAngle > this.vertAngles[2] )){
       side = 'l';
       normAngle = Math.PI;
-      // lineVerts = [this.verts[1],this.verts[2]];
     }else {
       side = 'b';
       normAngle= Math.PI/2;
-      // lineVerts = [this.verts[2],this.verts[3]];
     }
     
     normAngle  = makeAngleInBounds(normAngle + this.angle);
@@ -104,47 +99,6 @@ class Rectangle {
     other.y += b*other.dimY*.2;
 
   }
-
-/*
-  handleCollision(other){
-    //find the closest side to the collided entity.
-    // let posOther = [other.x, other.y];
-
-    other.x -= other.vx/2;
-    other.y -= other.vy/2;
-
-    let distanceDict = {};
-    for(let i =0; i< 4; i++){
-      let key = this.findNormalDistance(this.verts[i], this.verts[(i+1)%4], posOther);
-      distanceDict[key] = [i,(i+1)%4];
-    }
-
-
-    let minKey = Math.min(...Object.keys(distanceDict));
-    // debugger
-    let vertexPair =  [ this.verts[distanceDict[minKey][0]],  this.verts[distanceDict[minKey][1]] ] ;
-    //calculate slope and reflect velocity of 'other'
-    let slopeMag = distance(vertexPair[0][0], vertexPair[0][1], vertexPair[1][0], vertexPair[1][1]);
-    let c = (vertexPair[0][0]-vertexPair[1][0])/slopeMag ;
-    let d = (vertexPair[0][1]-vertexPair[1][1])/slopeMag;
-    let reflectionMatrix = matrix([[1-2*d**2,2*c*d],[2*c*d,1-2*c**2]]);
-    
-    let newVx;
-    let newVy;
-    [newVx, newVy] = multiply(reflectionMatrix, [other.vx, other.vy])._data;
-    
-    let normalV = multiply(other.dimX, normalizeVector([newVx, newVy]));
-      
-      //add([newVx,newVy], [other.vx, other.vy])));
-
-    [other.vx, other.vy] = [newVx, newVy];
-
-    // other.x += normalV[0];
-    // other.y += normalV[1];
-
-  }
-  */
-
 
   findNormalDistance(a,b,c){
     let naa = [-a[0],-a[1],0];
@@ -184,11 +138,9 @@ class Rectangle {
 
   isInside(p){
     let point = new Array(...p);
-    // console.log(point);
     point[0]-=this.x;
     point[1]-=this.y;
     point = multiply(rotationMatrix(-this.angle),point)._data;
-    // console.log(point)
     if (-this.width/2 <= point[0] 
       && point[0] <= this.width/2
       && -this.length/2 <= point[1]

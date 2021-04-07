@@ -134,7 +134,6 @@ class Game {
     for (let g = 0; g< this.entities.length; g++ ){
       for (let h =0; h< this.blocks.length; h++){
         if (this.blocks[h].isCollidedWith(this.entities[g])){
-          // console.log(`Collision with ${typeof this.blocks[h]}`);
           this.blocks[h].handleCollision(this.entities[g]);
           this.entities[g].handleCollision();
 

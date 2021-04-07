@@ -4,14 +4,6 @@ export const distance = (ax, ay,bx,by)=>{
   return ((ax-bx)**2+(ay-by)**2)**.5
 }
 
-// export const  normalizeVector = (a)=>{
-//   let s = 0;
-//   a.forEach((el)=>{s+=el**2});
-//   s = s**.5;
-//   return a.map((el)=>(el/s));
-// }
-
-
 export const makeAngleInBounds = (angle)=>{
   if (angle > Math.PI) return angle - 2*Math.PI;
   else if (angle < -Math.PI) return angle + 2*Math.PI;
