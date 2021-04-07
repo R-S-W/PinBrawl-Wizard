@@ -26,7 +26,7 @@ class Game {
 
 
     // this.blocks.push(new Rectangle(this.DIM_X/2, this.DIM_Y/2, 150,150, Math.PI/4))
-    this.blocks.push(new Circle(this.DIM_X/2, this.DIM_Y*.9, 30))
+    // this.blocks.push(new Circle(this.DIM_X/2, this.DIM_Y*.9, 30))
     
     let leftCircle = new Circle(.3*this.DIM_X, .2*this.DIM_Y, 50);
     this.blocks.push(leftCircle);
@@ -54,8 +54,8 @@ class Game {
 
 
 
-    // this.addEnemy();
-    // this.addEnemy();
+    this.addEnemy();
+    this.addEnemy();
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
@@ -76,7 +76,7 @@ class Game {
     this.entities.push(enemy);
   }
   addTestEnemy(){
-    this.entities.push(new Enemy(.4*this.DIM_X, .6*this.DIM_Y, 0, 1, 23,23));
+    this.entities.push(new Enemy(.4*this.DIM_X-15, .6*this.DIM_Y, 0, 1, 23,23));
   }
 
   addBall(){

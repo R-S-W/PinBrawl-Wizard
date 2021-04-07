@@ -30,7 +30,7 @@ class Rectangle {
     let trA = -brA;
     let tlA = brA- Math.PI;
     let blA = Math.PI-brA;
-    this.vertAngles = [trA, tlA,blA,brA];
+    this.vertAngles = [trA, tlA,blA,brA];   //these are not the rotated ones!  these are wrt the unrotated rectangle!
     
   }
 
@@ -196,6 +196,26 @@ class Rectangle {
         return true;
     }
     return false;
+  }
+
+  rotateOnPivot(pivot, theta ){
+    for (let i = 0; i< this.verts.length; i++){
+      this.verts[i][0]-=pivot[0];
+      this.verts[i][1]-= pivot[1];
+      this.verts[i] = multiply(rotationMatrix(theta), this.verts[i])._data
+      this.verts[i][0] +=pivot[0];
+      this.verts[i][1]+=pivot[1];
+    }
+    
+    this.x-=pivot[0];
+    this.y-=pivot[1];
+    [this.x, this.y] = multiply(rotationMatrix(theta), [this.x,this.y])._data
+    this.x+=pivot[0];
+    this.y+=pivot[1];
+
+
+
+    this.angle +=theta;
   }
 
 
