@@ -1,5 +1,6 @@
 import Circle from './circle';
 import Rectangle from './rectangle';
+import Ball from './ball';
 import {add, multiply,rotationMatrix, dot} from 'mathjs';
 import {makeAngleInBounds,  arcTangent, distance, reflectVector} from './math_utils';
 import AnimationData from './animation_data';
@@ -17,7 +18,7 @@ class Flipper {
     this.color = '#9C1A00';
     this.startAngle = startAngle;
     this.angle = startAngle;
-    this.angleRange = Math.PI/6;
+    this.angleRange = Math.PI/4; //Math.PI/6;
     this.endAngle = this.startAngle-this.angleRange*this.om;
     
     this.shape = {
@@ -101,7 +102,7 @@ class Flipper {
     let shapeList = Object.values(this.shape);
     for (let i = 0; i< 3; i++){
       if (shapeList[i].isCollidedWith(other)) {
-        if (shapeList[i] instanceof Rectangle) debugger
+        // if (shapeList[i] instanceof Rectangle) debugger
         return true;
       }
     }
@@ -140,6 +141,13 @@ class Flipper {
     
     other.x += normalVector[0]*other.dimX + .5* other.vx;
     other.y += normalVector[1]*other.dimY + .5*other.vy;
+
+
+    if (this.omega !== 0 && other instanceof Ball){
+      let booster = 1.4;
+      other.vx *= booster;
+      other.vy *= booster;
+    }
 
 
 

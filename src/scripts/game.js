@@ -18,6 +18,7 @@ class Game {
     
     this.timeVal;
     this.setupField();
+    this.successfulEnemiesCount = 0;
 
     
   }
@@ -75,7 +76,7 @@ class Game {
     this.addEnemy();
     // this.addEnemy();
     // this.addEnemy();
-    // this.addTestEnemy();
+    this.addTestEnemy();
 
     this.addBall();
     
@@ -91,17 +92,21 @@ class Game {
     this.entities.push(enemy);
   }
   addTestEnemy(){
-    this.entities.push(new Enemy(.4*this.DIM_X-15, .6*this.DIM_Y, 0, 1, 23,23));
+    // this.entities.push(new Enemy(.4*this.DIM_X-15, .6*this.DIM_Y, 0, 1, 23,23));
+    this.entities.push(new Enemy(this.DIM_X/2, .4*this.DIM_Y, 0, 2, 23,23));
   }
 
-  addBall(){
-    let angle = Math.PI*2*Math.random();
-    let vMag = 6;
-    let vx = vMag*Math.cos(angle);
-    let vy = vMag*Math.sin(angle);
-    let x = this.DIM_X*.4;
-    let y = this.DIM_Y/2;
-    let ball = new Ball(x,y,vx,vy,10,'#0095DD');
+  addBall(side = 0){
+    // let angle = Math.PI*2*Math.random();
+    // let vMag = 6;
+    // let vx = vMag*Math.cos(angle);
+    // let vy = vMag*Math.sin(angle);
+    let radius= 12;
+    let x = (side===0) ? radius : this.DIM_X-radius;
+    let y = 370; //this.DIM_Y/2;
+    let vx = 0;
+    let vy = 0;
+    let ball = new Ball(x,y,vx,vy,radius,'#0095DD');
     this.entities.push(ball);
   }
 
@@ -120,6 +125,29 @@ class Game {
   moveEntities(){
     this.flippers.forEach((flipper)=>{flipper.move()})
     this.entities.forEach((entity)=>{entity.move()})
+  }
+
+
+  handleLostEntities(){// entities that fell past the flippers
+    let indicesToDelete = [];
+    this.entities.forEach((e, idx)=>{
+      if (e.y+e.dimY/2 >= this.DIM_Y){
+        if (e instanceof Ball){
+          indicesToDelete.unshift(idx);
+          this.addBall(Math.round(Math.random()));
+
+        }else if (e instanceof Enemy){
+          this.successfulEnemiesCount++;
+          indicesToDelete.unshift(idx);
+        }
+      }
+    });
+    indicesToDelete.forEach((i)=>{
+      this.entities.splice(i,1);
+    })
+
+
+
   }
 
   reflectEntitiesOffWalls(){
