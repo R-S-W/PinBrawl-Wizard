@@ -10,6 +10,7 @@ class Flipper {
     this.x = x;
     this.y = y;
     this.isTurnsClockwise = rotationDirection === 'cw';
+    this.om = this.isTurnsClockwise ? -1 : 1;//orientation multiplier for angles
     this.bodyLength = 100;
     this.baseRadius = 15;
     this.edgeRadius = this.baseRadius;
@@ -17,7 +18,7 @@ class Flipper {
     this.startAngle = startAngle;
     this.angle = startAngle;
     this.angleRange = Math.PI/6;
-    this.endAngle = this.startAngle-this.angleRange;
+    this.endAngle = this.startAngle-this.angleRange*this.om;
     
     this.shape = {
       baseCircle : new Circle(this.x,this.y,this.baseRadius),
@@ -74,9 +75,9 @@ class Flipper {
       this.flipAnimationData.switchToDecrement();
     }
     this.flipAnimationData.go()
-    this.angle = this.startAngle - this.angleRange*this.flipAnimationData.fractionCompleted();      
+    this.angle = this.startAngle - this.angleRange*this.om*this.flipAnimationData.fractionCompleted();      
     this.omega = this.dOmegaMag * (this.flipAnimationData.frameIdx - oldFrame);
-    let dAngle = -this.oldAngle+this.angle;
+    let dAngle = (-this.oldAngle+this.angle) ;
 
     if (Math.abs(dAngle) > .000001){
       for (const s of Object.values(this.shape)) {
@@ -118,7 +119,7 @@ class Flipper {
     let vBumpMag = this.damper * othersProjectionOnFlipper * this.omega;
     
     let normalAngle = this.angle+Math.PI/2;
-    let normalVector = [-Math.cos(normalAngle), -Math.sin(normalAngle)];
+    let normalVector = [-this.om*Math.cos(normalAngle), -this.om*Math.sin(normalAngle)];
     let reflectedVelocity = reflectVector(normalVector, [other.vx, other.vy]);
     // debugger
     

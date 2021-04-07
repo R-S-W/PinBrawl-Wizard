@@ -47,9 +47,24 @@ class Game {
     this.blocks.push(rightCornerRect);
 
 
+    let flipperXCenterOffset = 135;
+    let flipperYCenterOffset = 260;
 
-    let leftFlipper = new Flipper(.35*this.DIM_X-30,600,'ccw', Math.PI/6);
+    let leftFlipper = new Flipper(
+      this.DIM_X/2-flipperXCenterOffset,
+      this.DIM_Y/2 + flipperYCenterOffset,
+      'ccw', 
+      Math.PI/6
+    );
+
+    let rightFlipper = new Flipper(
+      this.DIM_X/2+flipperXCenterOffset,
+      this.DIM_Y/2 + flipperYCenterOffset,
+      'cw', 
+      5/6*Math.PI
+    )
     this.flippers.push(leftFlipper);
+    this.flippers.push(rightFlipper);
 
 
 
