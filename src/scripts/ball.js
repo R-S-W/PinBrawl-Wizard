@@ -11,7 +11,7 @@ class Ball extends Entity {
     this.dimX = 2*radius;
     this.dimY = 2*radius;
     this.backgroundColor = color;
-    this.gravity = 1;
+    this.gravity = .25;
   }
 
   draw(ctx){

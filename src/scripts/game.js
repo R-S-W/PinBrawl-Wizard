@@ -58,11 +58,11 @@ class Game {
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
-    this.addEnemy();
-    this.addEnemy();
-    this.addTestEnemy();
+    // this.addEnemy();
+    // this.addEnemy();
+    // this.addTestEnemy();
 
-    // this.addBall();
+    this.addBall();
     
 
   }
