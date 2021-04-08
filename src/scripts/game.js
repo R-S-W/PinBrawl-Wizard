@@ -42,8 +42,8 @@ class Game {
 
 
 
-    let explosion = new Sound('./src/audio/explosion.mp3', .6);
-    let creeper_win = new Sound('./src/audio/creeper_win.mp3');
+    let explosion = new Sound('./src/audio/explosion.mp3', .3);
+    let creeper_win = new Sound('./src/audio/creeper_win.mp3', .5);
     // explosion.play();
 
 
