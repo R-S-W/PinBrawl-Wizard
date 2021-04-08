@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="./dist/main.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <title>PinBrawl</title>
 
   <style>
@@ -20,19 +22,34 @@
       margin: 0 auto;
     }
   </style>
+  <script src="./dist/main.js"></script>
+  <script src="keymaster.js"></script>
 </head>
 
 
 <!-- style="background: url('./src/images/grass.png')" -->
 
 <body>
+
+  <nav class = 'left-nav'>
+    <div class = 'life-bar'>
+      <h1>Lives: </h1>
+      <ul class = 'lives-list'>
+        <li class = 'life-1 life'><img src="./src/images/life.png" ></li>
+        <li class = 'life-2 life'><img src="./src/images/life.png"></li>
+        <li class = 'life-3 life'><img src = "./src/images/life.png"></li>
+      </ul>
+      
+    </div>
+  </nav>
   <canvas 
     id = 'game-canvas'  
   >
   </canvas>
-  <script src="./dist/main.js"></script>
-  <script src="keymaster.js"></script>
 
+  <nav class= 'right-nav'>
+    Right Side
+  </nav>
 </body>
 
 </html>

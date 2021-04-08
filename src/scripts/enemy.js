@@ -16,7 +16,6 @@ class Enemy extends Entity{
   }
 
   draw(ctx){
-    debugger
     if (this.isImage){
       this.squishAD.go();
       let squishNumber = Math.round(this.squishAD.fractionCompleted());

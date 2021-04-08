@@ -23,6 +23,8 @@ class GameView {
       this.game.addEnemy();
     }
 
+    // this.game.manageLivesBar();
+
     window.requestAnimationFrame(this.step);
   }
 
@@ -30,6 +32,8 @@ class GameView {
     
     window.requestAnimationFrame(this.step)
   }
+
+
 
   bindKeyHandlers(){
   // Object.keys(GameView.MOVES).forEach(function(k)  {

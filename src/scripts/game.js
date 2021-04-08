@@ -4,7 +4,8 @@ import Ball from './ball';
 import Enemy from './enemy';
 import Flipper from './flipper';
 import Sound from './sound';
-import { e } from 'mathjs';
+
+import LivesBar from './lives_bar'
 
 
 
@@ -19,11 +20,19 @@ class Game {
     this.flippers = [];
     
     this.timeVal;
+
+    this.successfulEnemiesCount = 0;
+
+
+
+    this.livesBar = new LivesBar();
+
+
+
     this.setupAssets();
     this.setupField();
     
 
-    this.successfulEnemiesCount = 0;
 
     
   }
@@ -35,7 +44,7 @@ class Game {
 
     let explosion = new Sound('./src/audio/explosion.mp3', .6);
     let creeper_win = new Sound('./src/audio/creeper_win.mp3');
-    explosion.play();
+    // explosion.play();
 
 
 
@@ -97,11 +106,11 @@ class Game {
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
-    // this.addEnemy();
+    this.addEnemy();
     // this.addEnemy();
     this.addTestEnemy();
 
-    // this.addBall();
+    this.addBall();
     
     
 
@@ -156,7 +165,7 @@ class Game {
 
     let enemyArray = [creeper, kyubey, js];
     let randIdx =Math.abs(Math.round(Math.random()*enemyArray.length-1));
-    debugger
+    // debugger
     this.entities.push(enemyArray[randIdx]);
   }
   addTestEnemy(){
@@ -207,6 +216,7 @@ class Game {
         }else if (e instanceof Enemy){
           this.successfulEnemiesCount++;
           indicesToDelete.unshift(idx);
+          this.livesBar.removeLife();
           if (e.soundNames)  this.sounds[e.soundNames.win].play();
         }
       }
@@ -288,6 +298,10 @@ class Game {
   }
 
 
+
+  manageLivesBar(){
+
+  }
 
   // makeCanvasBackground(ctx){
   //   let backgroundImage=  new Image();
