@@ -5,6 +5,9 @@ class GameView {
     this.game=  game;
     this.ctx = ctx;
 
+
+    this.startButton = document.getElementsByClassName('start-button')[0];
+    this.titleScreenModal = document.getElementsByClassName('title-screen-modal')[0];
     this.step = this.step.bind(this);
 
   }
@@ -29,8 +32,13 @@ class GameView {
   }
 
   start(){
+
+    this.startButton.addEventListener('click', (e)=>{
+      this.titleScreenModal.classList.add('hide')
+      
+      window.requestAnimationFrame(this.step)
+    })
     
-    window.requestAnimationFrame(this.step)
   }
 
 
