@@ -18,7 +18,7 @@ class Flipper {
     this.bodyLength = 93;
     this.baseRadius = 15;
     this.edgeRadius = this.baseRadius;
-    this.color = '#9C1A00';
+    this.color = '#42d4f5'; // '#9C1A00';
     this.startAngle = startAngle;
     this.angle = startAngle;
     this.angleRange = Math.PI/4; //Math.PI/6;
