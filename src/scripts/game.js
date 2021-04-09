@@ -29,7 +29,7 @@ class Game {
 
 
     this.livesBar = new LivesBar();
-
+    this.enemyTypeList= [];
     this.sounds;
 
 
@@ -42,6 +42,10 @@ class Game {
 
     let explosion = new Sound('./src/audio/explosion.mp3', .13);
     let creeper_win = new Sound('./src/audio/creeper_win.mp3', .35);
+    let kyubey_win = new Sound('./src/audio/kyubey_win.mp3');
+    let wat = new Sound('./src/audio/wat.mp3');
+    let pikachu_win = new Sound('./src/audio/pikachu_win.mp3',.15);
+    
     // explosion.play();
 
 
@@ -57,7 +61,7 @@ class Game {
     let penguin_hurt_2 = new Sound('./src/audio/penguin_hurt_2.mp3',.81);
     let penguinCollection = new SoundCollection({penguin_hurt_1, penguin_hurt_2});
 
-    this.sounds = {explosion, creeper_win, flipperCollection, penguinCollection}
+    this.sounds = {explosion, creeper_win, kyubey_win, flipperCollection, penguinCollection, wat, pikachu_win}
     Object.freeze(this.sounds);
   }
 
@@ -125,7 +129,6 @@ class Game {
 
   setupEnemies(){
 
-
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
@@ -164,13 +167,13 @@ class Game {
       './src/images/kyubey.png',
       {
         death: "explosion", 
-        win: 'creeper_win'
+        win: 'kyubey_win'
       },
       this.targetPos
     )
 
     let js = new Enemy(
-       Math.round(20+ (this.DIM_X-25)*Math.random()),
+      Math.round(20+ (this.DIM_X-25)*Math.random()),
       20/2,
       vx*3,
       vy*3,
@@ -178,13 +181,29 @@ class Game {
       30,
       './src/images/js.png',
       {
-        death:"explosion",
-        win: 'creeper_win'
+        death:"wat",
+        win: 'wat'
       },
       this.targetPos
     )
 
-    let enemyArray = [creeper, kyubey, js];
+    let pikachu = new Enemy(
+      Math.round(20+ (this.DIM_X-25)*Math.random()),
+      10,
+      vx,
+      vy,
+      45,
+      45,
+      './src/images/evil_pikachu.png',
+      {
+        death:'explosion',
+        win: 'pikachu_win'
+      },
+      this.targetPos
+
+    )    
+
+    let enemyArray = [creeper, kyubey, js, pikachu];
     let randIdx =Math.abs(Math.round(Math.random()*enemyArray.length-1));
     // debugger
     this.entities.push(enemyArray[randIdx]);
