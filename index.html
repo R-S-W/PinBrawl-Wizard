@@ -10,18 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <title>PinBrawl</title>
 
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-    }
-  
-    canvas {
-      background: #eee;
-      display: block;
-      margin: 0 auto;
-    }
-  </style>
+
   <script src="./dist/main.js"></script>
   <script src="keymaster.js"></script>
 </head>
@@ -44,6 +33,7 @@
   <div class = 'game-over-screen-modal screen-modal hide'>
     <div class = 'game-over-screen screen' >
       <header class = 'game-over-header'>---</header>
+      <section class = 'game-over-section'></section>
       <button class = 'restart-button                           hide '>Play Again?</button>
     </div>
   </div>
@@ -61,7 +51,8 @@
     </div>
   </nav>
   <canvas 
-    id = 'game-canvas'  
+    id = 'game-canvas'
+    style = 'background-image: url(./src/images/floor.png); background-repeat: repeat;'
   >
   </canvas>
 

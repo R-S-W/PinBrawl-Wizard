@@ -70,21 +70,21 @@ class Game {
     
 
     //Blocks___________________________
-    let leftCircle = new Circle(.3*this.DIM_X, .2*this.DIM_Y, 50);
+    let leftCircle = new Circle(.3*this.DIM_X, .2*this.DIM_Y, 50, './src/images/rock.png');
     this.blocks.push(leftCircle);
-    let rightCircle = new Circle(.7*this.DIM_X, .2*this.DIM_Y, 50);
+    let rightCircle = new Circle(.7*this.DIM_X, .2*this.DIM_Y, 50,'./src/images/rock.png');
     this.blocks.push(rightCircle);
     
     
-    let leftRect = new Rectangle(.25*this.DIM_X+20, .50*this.DIM_Y, 240, 40,Math.PI/4);
+    let leftRect = new Rectangle(.25*this.DIM_X+20, .50*this.DIM_Y, 240, 40,Math.PI/4, './src/images/column.png', [1,11/7]);
     this.blocks.push(leftRect);
 
-    let rightRect = new Rectangle(.75*this.DIM_X-20, .50*this.DIM_Y, 240, 40,-Math.PI/4);
+    let rightRect = new Rectangle(.75*this.DIM_X-20, .50*this.DIM_Y, 240, 40,-Math.PI/4,'./src/images/column.png', [1,11/7]);
     this.blocks.push(rightRect);
 
 
-    let leftCornerRect = new Rectangle(0,.85*this.DIM_Y, 400,300, .9*Math.PI/4);
-    let rightCornerRect = new Rectangle(this.DIM_X,this.DIM_Y*.85, 400,300, - .9*Math.PI/4);
+    let leftCornerRect = new Rectangle(0,.85*this.DIM_Y, 400,300, .9*Math.PI/4, './src/images/brick_wall.png');
+    let rightCornerRect = new Rectangle(this.DIM_X,this.DIM_Y*.85, 400,300, - .9*Math.PI/4, './src/images/brick_wall.png');
     this.blocks.push(leftCornerRect);
     this.blocks.push(rightCornerRect);
 
@@ -302,9 +302,7 @@ class Game {
     for (let h=0; h< this.flippers.length;h++){
       this.entities.forEach((e)=>{
         if (this.flippers[h].isCollidedWith(e)){
-          console.log('Collided with flipper')
           this.flippers[h].handleCollision(e);
-          
         }
       });
     } 
@@ -317,10 +315,11 @@ class Game {
 
           if (this.entities[i] instanceof Ball){
             deleteIndex = j;
+            debugger
             if (this.entities[j].soundNames)  this.sounds[this.entities[j].soundNames.death].play();
           }else if (this.entities[j] instanceof Ball){
             deleteIndex = i;
-            if (this.entities[j].soundNames)  this.sounds[this.entities[j].soundNames.death].play();
+            if (this.entities[i].soundNames)  this.sounds[this.entities[i].soundNames.death].play();
           }else{
             let temp = this.entities[i].vx;
             this.entities[i].vx  = -this.entities[j].vx;

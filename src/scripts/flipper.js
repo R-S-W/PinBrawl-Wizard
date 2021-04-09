@@ -26,7 +26,7 @@ class Flipper {
     
     this.shape = {
       baseCircle : new Circle(this.x,this.y,this.baseRadius),
-      body : new Rectangle(this.x+ .5*this.bodyLength, this.y, this.bodyLength, this.baseRadius*2),
+      body : new Rectangle(this.x+ .5*this.bodyLength, this.y, this.bodyLength, this.baseRadius*2, 0),
       edgeCircle : new Circle(this.x+this.bodyLength,this.y, this.edgeRadius)
     }
     this.damper = .5;

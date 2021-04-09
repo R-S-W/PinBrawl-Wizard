@@ -5,18 +5,26 @@ import {distance} from './math_utils';
 
 
 class Circle  {
-  constructor(x,y,radius){
+  constructor(x,y,radius, imageURL){
     this.x = x;
     this.y = y;
     this.radius = radius;
+    if (imageURL){
+      this.image= new Image();
+      this.image.src = imageURL;
+    }
   }
 
   draw(ctx){
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.radius,0, Math.PI*2);
-    ctx.fillStyle  = '#636579';
-    ctx.fill();
-    ctx.closePath();
+    if (!this.image){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.radius,0, Math.PI*2);
+      ctx.fillStyle  = '#636579';
+      ctx.fill();
+      ctx.closePath();
+    }else{
+      ctx.drawImage(this.image, this.x-this.radius, this.y-this.radius,this.radius*2, this.radius*2);
+    }
   }
 
 

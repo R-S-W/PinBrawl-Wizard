@@ -7,12 +7,18 @@ import Enemy from './enemy';
 
 
 class Rectangle {
-  constructor(x,y,width,length, angle = 0){
+  constructor(x,y,width,length, angle=0, imageURL = null , imageDimScale=  [1,1]){
     this.x=  x;
     this.y = y;
     this.width = width;
     this.length = length;
     this.angle= angle;
+
+    if (imageURL){
+      this.image = new Image();
+      this.image.src = imageURL;
+      this.imageDimScale = imageDimScale;
+    }
     
     let bl = multiply(rotationMatrix(angle) , [-this.width/2, +this.length/2])._data;
     let br = multiply(rotationMatrix(angle) , [+this.width/2, +this.length/2])._data;
@@ -40,13 +46,17 @@ class Rectangle {
     ctx.rotate(this.angle);
     ctx.translate(-this.x,-this.y);
 
-    ctx.beginPath();
-    ctx.rect(this.x-this.width/2, this.y-this.length/2, this.width, this.length);
-    ctx.fillStyle ='#636579';
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.translate(this.x,this.y);
+    if (!this.image){
+      ctx.beginPath();
+      ctx.rect(this.x-this.width/2, this.y-this.length/2, this.width, this.length);
+      ctx.fillStyle ='#636579';
+      ctx.fill();
+      ctx.closePath();
+    }else{
+      ctx.drawImage(this.image, this.x-this.width/2, this.y-this.length/2, this.width*this.imageDimScale[0], this.length*this.imageDimScale[1]);
+    }
+      
+      ctx.translate(this.x,this.y);
     ctx.rotate(-this.angle);
     ctx.translate(-this.x, -this.y);
   }

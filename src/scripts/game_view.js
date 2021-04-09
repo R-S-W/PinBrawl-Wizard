@@ -10,9 +10,11 @@ class GameView {
     this.titleScreenModal = document.getElementsByClassName('title-screen-modal')[0];
     this.gameOverScreenModal = document.getElementsByClassName('game-over-screen-modal')[0];
     this.gameOverScreenHeader = document.getElementsByClassName('game-over-header')[0];
+    this.gameOverScreenSection = document.getElementsByClassName('game-over-section')[0];
     this.resetGameButton = document.getElementsByClassName('restart-button')[0];
     this.step = this.step.bind(this);
 
+    this.numWavesComplete = 0;
   }
 
   step(timestamp){
@@ -30,12 +32,18 @@ class GameView {
     }
     
     if (this.game.isNoEnemies()){
+      this.numWavesComplete++;
       this.game.setupEnemies();
     }
 
     // this.game.manageLivesBar();
     if (this.game.isCompleted()){
       this.gameOverScreenHeader.textContent = this.game.gameOverMessage();
+      if (this.numWavesComplete > 0 ){
+        let messageStr = `You cleared ${this.numWavesComplete} `;
+        messageStr+= (this.numWavesComplete ===1) ?  'wave!' : 'waves!';
+        this.gameOverScreenSection.textContent = messageStr;
+      }
       this.gameOverScreenModal.classList.remove('hide');
       this.resetGameButton.addEventListener('click', (e)=>{
         this.gameOverScreenModal.classList.add('hide');
