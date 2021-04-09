@@ -31,16 +31,10 @@ class Game {
 
     this.setupAssets();
     this.setupField();
-    
-
-
-    
+    this.setupEntities();
   }
 
   setupAssets(){
-
-
-
 
     let explosion = new Sound('./src/audio/explosion.mp3', .1);
     let creeper_win = new Sound('./src/audio/creeper_win.mp3', .4);
@@ -98,22 +92,18 @@ class Game {
     )
     this.flippers.push(leftFlipper);
     this.flippers.push(rightFlipper);
+  }
 
 
-
-    //Entities_____________________
+  setupEntities(){
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
-    // this.addEnemy();
-    this.addTestEnemy();
-
+    this.addEnemy();
+    // this.addTestEnemy();
     this.addBall();
-    
-    
-
   }
 
   addEnemy(){
@@ -321,6 +311,14 @@ class Game {
       return 'Game Over'
     }
     // return 
+  }
+
+  reset(){
+    this.livesBar.reset();
+    this.successfulEnemiesCount = 0;
+    this.entities = [];
+    this.setupEntities();
+    this.timeval = undefined;
   }
 
   // makeCanvasBackground(ctx){

@@ -10,7 +10,7 @@ class GameView {
     this.titleScreenModal = document.getElementsByClassName('title-screen-modal')[0];
     this.gameOverScreenModal = document.getElementsByClassName('game-over-screen-modal')[0];
     this.gameOverScreenHeader = document.getElementsByClassName('game-over-header')[0];
-    this.resetGameButton = document.getElementsByClassName('reset-game-button');
+    this.resetGameButton = document.getElementsByClassName('restart-button')[0];
     this.step = this.step.bind(this);
 
   }
@@ -33,6 +33,12 @@ class GameView {
     if (this.game.isCompleted()){
       this.gameOverScreenHeader.textContent = this.game.gameOverMessage();
       this.gameOverScreenModal.classList.remove('hide');
+      debugger
+      this.resetGameButton.addEventListener('click', (e)=>{
+        this.gameOverScreenModal.classList.add('hide');
+        this.game.reset();
+        window.requestAnimationFrame(this.step);
+      })
     }else{
       window.requestAnimationFrame(this.step);
     }
@@ -43,9 +49,9 @@ class GameView {
 
     this.startButton.addEventListener('click', (e)=>{
       this.titleScreenModal.classList.add('hide')
-      
       window.requestAnimationFrame(this.step)
     })
+
     
   }
 

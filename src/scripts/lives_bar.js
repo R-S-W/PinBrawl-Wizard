@@ -4,9 +4,9 @@ class LivesBar  {
     this.livesCount = this.livesList.length;
   }
   reset(){
-    this.livesList.forEach((life)=>{
-      life.classList.remove('lost-life')
-    });
+    for (let i = 0; i< this.livesList.length; i++){
+      this.livesList[i].classList.remove('lost-life');
+    }
     this.livescount = this.livesList.length;
   }
   removeLife(){
