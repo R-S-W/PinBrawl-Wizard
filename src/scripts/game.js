@@ -4,8 +4,10 @@ import Ball from './ball';
 import Enemy from './enemy';
 import Flipper from './flipper';
 import Sound from './sound';
+import SoundCollection from './sound_collection';
 
 import LivesBar from './lives_bar'
+import Wizard from './wizard';
 
 
 
@@ -27,6 +29,7 @@ class Game {
 
     this.livesBar = new LivesBar();
 
+    this.sounds;
 
 
     this.setupAssets();
@@ -36,13 +39,25 @@ class Game {
 
   setupAssets(){
 
-    let explosion = new Sound('./src/audio/explosion.mp3', .1);
-    let creeper_win = new Sound('./src/audio/creeper_win.mp3', .4);
+    let explosion = new Sound('./src/audio/explosion.mp3', .15);
+    let creeper_win = new Sound('./src/audio/creeper_win.mp3', .35);
     // explosion.play();
 
 
+    let flipper_1 = new Sound('./src/audio/flipper_1.mp3',.8);
+    let flipper_2 = new Sound('./src/audio/flipper_2.mp3',.8);
+    let flipper_3 = new Sound('./src/audio/flipper_3.mp3',.8);
+    let flipper_4 = new Sound('./src/audio/flipper_4.mp3',.8);
+    let flipperCollection = new SoundCollection({flipper_1, flipper_2, flipper_3, flipper_4});
 
-    this.sounds = {explosion, creeper_win}
+    // let flipper1 = new Sound('./src/audio/ .mp3');
+
+    let penguin_hurt_1 = new Sound('./src/audio/penguin_hurt_1.mp3',.8);
+    let penguin_hurt_2 = new Sound('./src/audio/penguin_hurt_2.mp3',.8);
+    let penguinCollection = new SoundCollection({penguin_hurt_1, penguin_hurt_2});
+
+    this.sounds = {explosion, creeper_win, flipperCollection, penguinCollection}
+    Object.freeze(this.sounds);
   }
 
   setupField(){
@@ -81,21 +96,30 @@ class Game {
       this.DIM_X/2-flipperXCenterOffset,
       this.DIM_Y/2 + flipperYCenterOffset,
       'ccw', 
-      Math.PI/6
+      Math.PI/6,
+      this.sounds.flipperCollection
     );
 
     let rightFlipper = new Flipper(
       this.DIM_X/2+flipperXCenterOffset,
       this.DIM_Y/2 + flipperYCenterOffset,
       'cw', 
-      5/6*Math.PI
+      5/6*Math.PI,
+      this.sounds.flipperCollection
     )
     this.flippers.push(leftFlipper);
     this.flippers.push(rightFlipper);
+    this.sounds.flipperCollection
   }
 
 
   setupEntities(){
+
+    //add wizard
+
+    this.coolPenguin = new Wizard(this.DIM_X/2, this.DIM_Y*.95);
+    
+
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
@@ -103,7 +127,7 @@ class Game {
     this.addEnemy();
     this.addEnemy();
     // this.addTestEnemy();
-    this.addBall();
+    // this.addBall();
   }
 
   addEnemy(){
@@ -188,6 +212,8 @@ class Game {
     for (let i= 0 ; i< this.entities.length; i++){
       this.entities[i].draw(ctx);
     }
+
+    this.coolPenguin.draw(ctx);
   }
 
   moveEntities(){
@@ -290,13 +316,23 @@ class Game {
       }
     }
     if (deleteIndex !== -1)  this.entities.splice(deleteIndex,1);
+
+
+    //Wizard-entity Collisions
+    this.entities.forEach((e)=>{
+      if (this.coolPenguin.isCollidedWith(e)){
+        this.coolPenguin.handleCollision();
+
+        if (!this.sounds.penguinCollection.isASongPlaying()){
+          // let aSound = this.sounds.penguinCollection.sample();
+          this.sounds.penguinCollection.sample().play();
+
+        }
+
+      }
+    })
   }
 
-
-
-  manageLivesBar(){
-
-  }
 
 
   isCompleted(){

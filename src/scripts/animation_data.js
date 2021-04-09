@@ -16,8 +16,8 @@ class AnimationData {
       this.frameIdx += this.itr;
     }
     
-    if (this.isComplete() && this.isAutoReset) this.reset();
-    else if (this.isComplete() && this.isAutoReverse) this.reverse(); 
+    if (this.isAtStartOrEnd() && this.isAutoReset) this.reset();
+    else if (this.isAtStartOrEnd() && this.isAutoReverse) this.reverse(); 
   }
   reverse(){
     this.itr *=-1;
@@ -32,7 +32,7 @@ class AnimationData {
     this.itr=1;
   }
 
-  isComplete(){return (this.isAtStart() || this.isAtEnd())}
+  isAtStartOrEnd(){return (this.isAtStart() || this.isAtEnd())}
 
   isAtStart(){return this.frameIdx === 0;}
 

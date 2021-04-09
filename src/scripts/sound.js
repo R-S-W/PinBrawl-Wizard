@@ -20,6 +20,9 @@ class Sound {
   pause(){
     this.sound.pause();
   }
+  isPlaying(){
+    return this.sound.currentTime !== 0 && this.sound.currentTime !== this.sound.duration ;
+  }
 
 }
 export default Sound;

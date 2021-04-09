@@ -25,7 +25,7 @@ class Enemy extends Entity{
       
       let enemyDimX = (-.35*squishNumber +1+.35) * this.dimX;
 
-      ctx.drawImage(this.image, this.x, enemyY, enemyDimX, enemyDimY);
+      ctx.drawImage(this.image, this.x-enemyDimX/2, enemyY, enemyDimX, enemyDimY);
     }else{
       super.draw(ctx);
     }

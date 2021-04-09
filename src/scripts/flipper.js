@@ -7,12 +7,15 @@ import AnimationData from './animation_data';
 
 class Flipper {
 
-  constructor(x,y ,rotationDirection = 'cw', startAngle= 5*Math.PI/6){
+  constructor(x,y ,rotationDirection = 'cw', startAngle, soundCollection){
     this.x = x;
     this.y = y;
     this.isTurnsClockwise = rotationDirection === 'cw';
+
+    
+    
     this.om = this.isTurnsClockwise ? -1 : 1;//orientation multiplier for angles
-    this.bodyLength = 100;
+    this.bodyLength = 93;
     this.baseRadius = 15;
     this.edgeRadius = this.baseRadius;
     this.color = '#9C1A00';
@@ -31,6 +34,10 @@ class Flipper {
     this.flipAnimationData = new AnimationData(5);
     this.dOmegaMag = 1/this.flipAnimationData.numFrames;
     this.omega = 0; // angular velocity
+
+
+    this.soundCollection = soundCollection;
+
   }
   
   draw(ctx){
@@ -72,6 +79,7 @@ class Flipper {
       || (!this.isTurnsClockwise && (key.isPressed("z") || key.isPressed('Z')) ) 
     ){
       this.flipAnimationData.switchToIncrement();
+      if (this.flipAnimationData.isAtStart())  this.soundCollection.sample().play();
     }else{
       this.flipAnimationData.switchToDecrement();
     }
@@ -80,6 +88,7 @@ class Flipper {
     this.omega = this.dOmegaMag * (this.flipAnimationData.frameIdx - oldFrame);
     let dAngle = (-this.oldAngle+this.angle) ;
 
+  
     if (Math.abs(dAngle) > .000001){
       for (const s of Object.values(this.shape)) {
         if (s instanceof Rectangle){
