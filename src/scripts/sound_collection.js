@@ -12,7 +12,6 @@ class SoundCollection {
 
   isASongPlaying(){
     let songs = Object.values(this.collection);
-    debugger
     for( let i=0; i< songs.length; i++){
       if (songs[i].isPlaying()) return true;
     }

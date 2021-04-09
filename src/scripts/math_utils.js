@@ -25,3 +25,11 @@ export const reflectVector = (normalVector, vector)=>{
   let reflectionMatrix = matrix([[1-2*a**2, -2*a*b],[-2*a*b, 1-2*b**2]]);
   return   multiply(reflectionMatrix, vector)._data;
 }
+
+
+export const normalizeVector = (vec)=>{
+  let mag = 0;
+  vec.forEach((e)=>{mag+= e**2});
+  mag = mag**.5;
+  return multiply(vec,1/mag);
+}

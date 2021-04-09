@@ -24,6 +24,7 @@ class Game {
     this.timeVal;
 
     this.successfulEnemiesCount = 0;
+    this.targetPos = [this.DIM_X/2,this.DIM_Y];
 
 
 
@@ -118,7 +119,12 @@ class Game {
     //add wizard
 
     this.coolPenguin = new Wizard(this.DIM_X/2, this.DIM_Y*.95);
-    
+    this.addBall();
+    this.setupEnemies();
+  }
+
+  setupEnemies(){
+
 
     this.addEnemy();
     this.addEnemy();
@@ -126,8 +132,6 @@ class Game {
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
-    // this.addTestEnemy();
-    this.addBall();
   }
 
   addEnemy(){
@@ -146,7 +150,8 @@ class Game {
       {
         death: "explosion",
         win: "creeper_win",
-      }
+      },
+      this.targetPos
       // 'explosion'
     );
     let kyubey = new Enemy(
@@ -160,7 +165,8 @@ class Game {
       {
         death: "explosion", 
         win: 'creeper_win'
-      }
+      },
+      this.targetPos
     )
 
     let js = new Enemy(
@@ -174,7 +180,8 @@ class Game {
       {
         death:"explosion",
         win: 'creeper_win'
-      }
+      },
+      this.targetPos
     )
 
     let enemyArray = [creeper, kyubey, js];
@@ -200,6 +207,13 @@ class Game {
     let imageURL = './src/images/pinball.png';
     let ball = new Ball(x,y,vx,vy,radius,imageURL);
     this.entities.push(ball);
+  }
+
+  isNoEnemies(){
+    for (let i = 0; i< this.entities.length; i++){
+      if (this.entities[i] instanceof Enemy) return false;
+    }
+    return true;
   }
 
 

@@ -24,16 +24,19 @@ class GameView {
     this.game.checkCollisions();
 
     if (!this.timeVal) this.timeVal = timestamp;
-    if (this.game.entities.length < 12 && timestamp - this.timeVal > 10000){
+    if (this.game.entities.length < 20 && timestamp - this.timeVal > 8000){
       this.timeVal =0;
       this.game.addEnemy();
+    }
+    
+    if (this.game.isNoEnemies()){
+      this.game.setupEnemies();
     }
 
     // this.game.manageLivesBar();
     if (this.game.isCompleted()){
       this.gameOverScreenHeader.textContent = this.game.gameOverMessage();
       this.gameOverScreenModal.classList.remove('hide');
-      debugger
       this.resetGameButton.addEventListener('click', (e)=>{
         this.gameOverScreenModal.classList.add('hide');
         this.game.reset();
