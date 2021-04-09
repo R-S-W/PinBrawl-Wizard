@@ -31,13 +31,21 @@
 
 <body>
 
-  <div class = 'title-screen-modal'>
+  <div class = 'title-screen-modal screen-modal'>
     <!-- <div class = 'title-screen-background'></div> -->
-    <div class = 'title-screen'>
+    <div class = 'title-screen screen'>
       <header>Pinbrawl Wizard</header>
       <button class = 'start-button'>Start</button>
     </div>
   </div>
+
+  <div class = 'game-over-screen-modal screen-modal hide'>
+    <div class = 'game-over-screen screen' >
+      <header class = 'game-over-header'>---</header>
+      <button class = 'restart-button'>Play Again?</button>
+    </div>
+  </div>
+
 
   <nav class = 'left-nav'>
     <div class = 'life-bar'>
@@ -56,7 +64,7 @@
   </canvas>
 
   <nav class= 'right-nav'>
-    Right Side
+    <!-- Right Side -->
   </nav>
 </body>
 

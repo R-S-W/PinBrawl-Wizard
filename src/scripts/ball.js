@@ -1,21 +1,27 @@
 import Entity from './entity';
 
 class Ball extends Entity {
-  constructor(x,y,vx,vy,radius,color){
+  constructor(x,y,vx,vy,radius,imageURL, soundNames){
     super(x,y,vx,vy);
     this.radius = radius;
     this.dimX = 2*radius;
     this.dimY = 2*radius;
-    this.backgroundColor = color;
+    // this.backgroundColor = color;
     this.gravity = .25;
+
+    this.image = new Image();
+    this.image.src = imageURL;
+
+    this.soundNames = soundNames;
   }
 
   draw(ctx){
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.radius,0, Math.PI*2);
-    ctx.fillStyle  = this.backgroundColor;
-    ctx.fill();
-    ctx.closePath();
+    // ctx.beginPath();
+    // ctx.arc(this.x,this.y,this.radius,0, Math.PI*2);
+    ctx.drawImage(this.image, this.x, this.y, this.radius*2, this.radius*2)
+    // ctx.fillStyle  = this.backgroundColor;
+    // ctx.fill();
+    // ctx.closePath();
   }
 
   move(){

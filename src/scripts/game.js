@@ -183,7 +183,8 @@ class Game {
     let y = 370; //this.DIM_Y/2;
     let vx = 0;
     let vy = 0;
-    let ball = new Ball(x,y,vx,vy,radius,'#0095DD');
+    let imageURL = './src/images/pinball.png';
+    let ball = new Ball(x,y,vx,vy,radius,imageURL);
     this.entities.push(ball);
   }
 
@@ -212,6 +213,10 @@ class Game {
         if (e instanceof Ball){
           indicesToDelete.unshift(idx);
           this.addBall(Math.round(Math.random()));
+
+
+          this.livesBar.removeLife();
+
 
         }else if (e instanceof Enemy){
           this.successfulEnemiesCount++;
@@ -301,6 +306,21 @@ class Game {
 
   manageLivesBar(){
 
+  }
+
+
+  isCompleted(){
+    return (this.livesBar.isEmpty() );//|| this.entities)
+    // if (this.livesBar.isEmpty()){
+    //   this.
+    // }
+  }
+
+  gameOverMessage(){
+    if (this.livesBar.isEmpty()){
+      return 'Game Over'
+    }
+    // return 
   }
 
   // makeCanvasBackground(ctx){

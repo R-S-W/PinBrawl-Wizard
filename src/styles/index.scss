@@ -19,14 +19,14 @@ body{
   }
 
 
-  .title-screen-modal{
+  .screen-modal{
     position: absolute;
     margin: auto;
     height: 100%;
     width: 100%;
     background-color: rgb(30, 0, 58);
     
-    .title-screen{
+    .screen{
       position: relative;
       display: flex;
       flex-direction: column;

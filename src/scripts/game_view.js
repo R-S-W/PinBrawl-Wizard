@@ -8,6 +8,9 @@ class GameView {
 
     this.startButton = document.getElementsByClassName('start-button')[0];
     this.titleScreenModal = document.getElementsByClassName('title-screen-modal')[0];
+    this.gameOverScreenModal = document.getElementsByClassName('game-over-screen-modal')[0];
+    this.gameOverScreenHeader = document.getElementsByClassName('game-over-header')[0];
+    this.resetGameButton = document.getElementsByClassName('reset-game-button');
     this.step = this.step.bind(this);
 
   }
@@ -27,8 +30,13 @@ class GameView {
     }
 
     // this.game.manageLivesBar();
+    if (this.game.isCompleted()){
+      this.gameOverScreenHeader.textContent = this.game.gameOverMessage();
+      this.gameOverScreenModal.classList.remove('hide');
+    }else{
+      window.requestAnimationFrame(this.step);
+    }
 
-    window.requestAnimationFrame(this.step);
   }
 
   start(){
