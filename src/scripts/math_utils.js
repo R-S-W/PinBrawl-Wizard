@@ -1,4 +1,4 @@
-import {multiply, matrix} from 'mathjs';
+import {multiply, matrix, rotationMatrix} from 'mathjs';
 
 export const distance = (ax, ay,bx,by)=>{
   return ((ax-bx)**2+(ay-by)**2)**.5
@@ -33,3 +33,20 @@ export const normalizeVector = (vec)=>{
   mag = mag**.5;
   return multiply(vec,1/mag);
 }
+
+
+export const selfDyad2D = (vec)=>{
+  let a = vec[0];
+  let b=  vec[1];
+  return matrix([[a**2, a*b],[a*b, b**2]]);
+}
+
+export const tangentMatrix=(vec)=>{
+  let v = normalizeVector(vec);
+  return selfDyad2D(v);
+}
+export const normalMatrix=(vec)=>{
+  let v =  multiply(rotationMatrix(Math.PI/2),normalizeVector(vec))._data;
+  return selfDyad2D(v);
+}
+

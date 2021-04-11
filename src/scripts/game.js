@@ -9,6 +9,9 @@ import SoundCollection from './sound_collection';
 import LivesBar from './lives_bar'
 import Wizard from './wizard';
 
+import {createElasticCollisionVelocities} from './physics_utils';
+import {add} from 'mathjs';
+
 
 
 class Game {
@@ -339,10 +342,31 @@ class Game {
           }else if (this.entities[j] instanceof Ball){
             deleteIndex = i;
             if (this.entities[i].soundNames)  this.sounds[this.entities[i].soundNames.death].play();
-          }else{
-            let temp = this.entities[i].vx;
-            this.entities[i].vx  = -this.entities[j].vx;
-            this.entities[j].vx =-temp;
+          }else{//Calculate new velocities
+            let newVi;
+            let newVj;
+            
+            [newVi, newVj] = createElasticCollisionVelocities(
+              [this.entities[i].x, this.entities[i].y],
+              [this.entities[j].x, this.entities[j].y],
+              [this.entities[i].vx, this.entities[i].vy],
+              [this.entities[j].vx, this.entities[j].vy]
+            );
+            [this.entities[i].vx, this.entities[i].vy] = newVi;
+            [this.entities[j].vx, this.entities[j].vy] = newVj;
+
+            let aNormalVec = [this.entities[i].x- this.entities[j].x, this.entities[i].y-this.entities[j].y];
+            this.entities[i].x += newVi[0]*.5;
+            this.entities[i].y += newVi[1]*.5;
+            this.entities[j].x -= newVj[0]*.5;
+            this.entities[j].y -= newVj[1]*.5;
+              //              aNormalVec[0]*.5;
+              //  aNormalVec[0]*.5;
+              //  aNormalVec[1]*.5;
+              //  aNormalVec[1]*.5;
+            // let temp = this.entities[i].vx;
+            // this.entities[i].vx  = -this.entities[j].vx;
+            // this.entities[j].vx =-temp;
           }
         }
       }
