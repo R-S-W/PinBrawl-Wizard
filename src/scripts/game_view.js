@@ -19,7 +19,7 @@ class GameView {
 
   step(timestamp){
     
-    this.game.moveEntities();
+    this.game.update();
     this.game.handleLostEntities();
     this.game.reflectEntitiesOffWalls();
     this.game.draw(this.ctx);

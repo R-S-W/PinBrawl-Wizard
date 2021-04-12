@@ -252,9 +252,10 @@ class Game {
     this.coolPenguin.draw(ctx);
   }
 
-  moveEntities(){
+  update(){
     this.flippers.forEach((flipper)=>{flipper.move()})
     this.entities.forEach((entity)=>{entity.move()})
+    this.coolPenguin.update();
   }
 
 
@@ -337,7 +338,6 @@ class Game {
 
           if (this.entities[i] instanceof Ball){
             deleteIndex = j;
-            debugger
             if (this.entities[j].soundNames)  this.sounds[this.entities[j].soundNames.death].play();
           }else if (this.entities[j] instanceof Ball){
             deleteIndex = i;
@@ -360,7 +360,7 @@ class Game {
             this.entities[i].y += newVi[1]*.5;
             this.entities[j].x -= newVj[0]*.5;
             this.entities[j].y -= newVj[1]*.5;
-              //              aNormalVec[0]*.5;
+              //  aNormalVec[0]*.5;
               //  aNormalVec[0]*.5;
               //  aNormalVec[1]*.5;
               //  aNormalVec[1]*.5;

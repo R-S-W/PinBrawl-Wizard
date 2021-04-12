@@ -1,4 +1,5 @@
 import AnimationData from "./animation_data";
+import Animation from './animation';
 import Rectangle from './rectangle';
 
 
@@ -30,10 +31,35 @@ class Wizard {
 
 
     this.probabilityShowFront = .14;
+
+
+    // './src/images/fireball_ .png'
+    
+    // this.isFireball= false;
+    // this.fireBall; //Used for collision detection
+    // this.fireBallAnimation = new Animation(
+    //   [
+    //     './src/images/fireball_1.png',
+    //     './src/images/fireball_2.png',
+    //     './src/images/fireball_3.png',
+    //     './src/images/fireball_4.png',
+    //     './src/images/fireball_5.png'
+    //   ],
+    //   {
+    //     type: 'reset',
+    //     framesToImgIndices: [ 0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4,4,4,
+    //       4,5,5,5,4,4,4,5,5,5,4,4,4,5,5,5,4,4,4,5,5,5,4,4,4,5,5,5,4,4,4,5,5,5,
+    //       5,5,4,4,4,4,4,3,3,3,3,3,2,2,2,2,2,1,1,1,1,1
+    //     ]
+    //   }
+    // );
+
   }
 
-  draw(ctx){
-    
+  update(){
+
+
+    //Flippers
     if (key.isPressed('/') || key.isPressed('?')){
       this.image = this.imageCollection.right;
       this.isGetNewRestImage = true;
@@ -47,6 +73,30 @@ class Wizard {
         this.isGetNewRestImage = false;
       }
     }
+
+
+
+    //Fireball
+    // if (key.isPressed('x') || key.isPressed('X')){
+    //   this.isFireball = true;
+    //   let dimX = this.fireBallAnimation.currentFrame.width;
+    //   let dimY = this.fireBallAnimation.currentFrame.height;
+    //   debugger
+    //   this.fireball  = new Rectangle(this.x,this.y-this.dimY/2-dimY/2,dimX, dimY);
+    // }
+    // if (this.isFireball){
+    //   this.fireBallAnimation.step();
+    // }
+    // if (this.fireBallAnimation.isAtEnd()){
+    //   this.isFireball =false;
+    //   delete this.fireball;
+    // }
+
+  }
+
+
+  draw(ctx){
+
     
     //Handle squashed effect
     let penguinDimY = this.dimY;
@@ -61,10 +111,16 @@ class Wizard {
         this.squashedAD.reset();
       }
     }
-
+    //Wizard
     ctx.drawImage(this.image, this.x-penguinDimX/2, this.y-penguinDimY/2, penguinDimX, penguinDimY )
     // ctx.drawImage(image, this.x, this.y, 30, 40 )
 
+
+    //Fireball
+    // if (this.isFireball){
+    //   debugger
+    //   ctx.drawImage(this.fireBallAnimation.currentFrame,this.fireball.x-this.fireball.width, this.fireball.y-this.fireball.length, this.fireball.width, this.fireball.length);
+    // }
   }
   
 
