@@ -1,12 +1,17 @@
 
 $screenHeight : 680px;
+$background-color: rgb(30, 0, 58);
+$border-settings: 3px solid white;
 
-
+.game-border-div{
+  border: 3px double white;
+  height:   $screenHeight;
+}
 body{
   width: 100%;
   height: 100%;
   margin:auto;
-  background-color: black;
+  background-color: $background-color;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,19 +19,15 @@ body{
   color: white;
   font-family: 'Press Start 2P', cursive;
 
-  canvas{
-    margin: 0;
-    
-
-  }
-
 
   .screen-modal{
     position: absolute;
     margin: auto;
-    height: 110%;
-    width: 100%;
-    background-color: rgb(30, 0, 58);
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color:$background-color;
     display:block;
     
     .screen{
@@ -78,10 +79,23 @@ body{
     width: 290px;
     height: $screenHeight;    
     background-color: rgb(27, 8, 63);
+    border: $border-settings;
   }
-  .left-nav {
+  .left-nav {    
+    border-style: solid none solid solid;
   }
 
+  canvas{
+    margin: 0;
+    border:$border-settings;
+    border-style: solid none solid none;
+    
+  }
+
+
+  .right-nav{
+    border-style: solid solid solid none;
+  }
 
   .life-bar {
     display: flex;

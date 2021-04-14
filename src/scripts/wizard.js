@@ -60,7 +60,7 @@ class Wizard {
 
 
     //Flippers
-    if (key.isPressed('/') || key.isPressed('?')){
+    if (key.isPressed('.') || key.isPressed('>')){
       this.image = this.imageCollection.right;
       this.isGetNewRestImage = true;
     }else if(key.isPressed('z') || key.isPressed('Z')){

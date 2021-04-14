@@ -75,7 +75,7 @@ class Flipper {
 
     }
     
-    if ( (this.isTurnsClockwise && (key.isPressed('/') || key.isPressed('?')) ) 
+    if ( (this.isTurnsClockwise && (key.isPressed('.') || key.isPressed('>')) ) 
       || (!this.isTurnsClockwise && (key.isPressed("z") || key.isPressed('Z')) ) 
     ){
       this.flipAnimationData.switchToIncrement();
