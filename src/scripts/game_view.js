@@ -104,7 +104,7 @@ class GameView {
 
   makeUserImageRef(){
     this.userImage = document.getElementsByClassName('user-image')[0];
-    this.game.userImages.push(this.userImage);
+    this.game.addUserEnemyInfo(this.userImage);
   }
 
   

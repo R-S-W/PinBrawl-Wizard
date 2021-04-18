@@ -32,7 +32,8 @@ class Game {
 
 
     this.livesBar = new LivesBar();
-    this.enemyTypeList= [];
+    //list of objects with data to create different enemies. Sampled in addEnemy
+    this.enemyInfos = [];  
     this.sounds;
 
 
@@ -135,6 +136,73 @@ class Game {
 
   setupEnemies(){
 
+    if (this.enemyInfos.length === 0){    
+      //setup this.enemyInfos list
+      let creeperInfo = {
+        dimX:20, 
+        dimY:40,
+        imageURL:'./src/images/creeper.png',
+        soundNames: {
+          death: "explosion",
+          win: "creeper_win",
+        },
+        targetPos: this.targetPos
+      }
+      
+      let kyubeyInfo  = {
+        dimX: 40,
+        dimY: 40,
+        imageURL:'./src/images/kyubey.png',
+        soundNames: {
+          death: "explosion", 
+          win: 'kyubey_win'
+        },
+        targetPos: this.targetPos
+      }
+      
+      let jsInfo = {
+        dimX: 30,
+        dimY:30,
+        imageURL: './src/images/js.png',
+        soundNames: {
+          death:"wat",
+          win: 'wat'
+        },
+        targetPos: this.targetPos
+      }
+      
+      let pikachuInfo = {
+        dimX:45,
+        dimY:45,
+        imageURL: './src/images/evil_pikachu.png',
+        soundNames: {
+          death:'explosion',
+          win: 'pikachu_win'
+        },
+        targetPos: this.targetPos
+      }
+      this.enemyInfos.push( creeperInfo);
+      this.enemyInfos.push( kyubeyInfo);
+      this.enemyInfos.push( jsInfo);
+      this.enemyInfos.push( pikachuInfo);
+      
+      
+      // this.userImages.forEach( (img)=>{
+      //   let userEnemyInfo = {
+      //     dimX: 30,
+      //     dimY: 30,
+      //     imageURL: img.src,
+      //     soundNames:{
+      //       death: 'explosion',
+      //       win:'wat'
+      //     },
+      //     targetPos: this.targetPos
+      //   };
+      //   this.enemyInfos.push(userEnemyInfo);
+      // });
+    }
+
+
     this.addEnemy();
     this.addEnemy();
     this.addEnemy();
@@ -143,11 +211,51 @@ class Game {
     this.addEnemy();
   }
 
-  addEnemy(){
+
+  addUserEnemyInfo(img){
+    this.userImages.push(img);
+    let userEnemyInfo = {
+      dimX: 30,
+      dimY: 30,
+      imageURL: img.src,
+      soundNames:{
+        death: 'explosion',
+        win:'wat'
+      },
+      targetPos: this.targetPos
+    };
+    debugger
+    this.enemyInfos.push(userEnemyInfo);
+    this.addEnemy(this.enemyInfos.length-1);
+  }
+
+
+
+  addEnemy(idx = undefined){
+    if (idx) debugger
+    idx =  idx || Math.round(Math.random()*(this.enemyInfos.length - 1));
+    
     let angle = -Math.PI*Math.random();
     let vMag = 2;
     let vx = vMag*Math.cos(angle);
     let vy = -vMag*Math.sin(angle);
+
+    let enemyInfo = this.enemyInfos[idx];
+    let newEnemy = new Enemy(
+      Math.round(20+ (this.DIM_X-25)*Math.random()),
+      20/2,
+      vx,
+      vy,
+      enemyInfo.dimX,
+      enemyInfo.dimY,
+      enemyInfo.imageURL,
+      enemyInfo.soundNames,
+      enemyInfo.targetPos
+    );
+    this.entities.push(newEnemy);
+
+
+    /*
     let creeper = new Enemy(
       Math.round(20+ (this.DIM_X-25)*Math.random()),
       20/2,
@@ -208,11 +316,11 @@ class Game {
       this.targetPos
 
     )    
+    */
 
-    let enemyArray = [creeper, kyubey, js, pikachu];
-    let randIdx =Math.abs(Math.round(Math.random()*enemyArray.length-1));
-    // debugger
-    this.entities.push(enemyArray[randIdx]);
+    // let enemyArray = [creeper, kyubey, js, pikachu];
+    // let randIdx =Math.abs(Math.round(Math.random()*enemyArray.length-1));
+    // this.entities.push(enemyArray[randIdx]);
   }
   addTestEnemy(){
     // this.entities.push(new Enemy(.4*this.DIM_X-15, .6*this.DIM_Y, 0, 1, 23,23));
