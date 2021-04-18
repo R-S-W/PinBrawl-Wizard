@@ -1,3 +1,4 @@
+import { e } from "mathjs";
 
 class GameView {
 
@@ -8,6 +9,7 @@ class GameView {
 
     this.startButton = document.getElementsByClassName('start-button')[0];
     this.titleScreenModal = document.getElementsByClassName('title-screen-modal')[0];
+    this.imageUploadPanel = document.getElementsByClassName('image-upload-panel')[0];
     this.gameOverScreenModal = document.getElementsByClassName('game-over-screen-modal')[0];
     this.gameOverScreenHeader = document.getElementsByClassName('game-over-header')[0];
     this.gameOverScreenSection = document.getElementsByClassName('game-over-section')[0];
@@ -15,6 +17,9 @@ class GameView {
     this.step = this.step.bind(this);
 
     this.numWavesComplete = 0;
+
+    this.handleDrop = this.handleDrop.bind(this);
+    this.makeUserImageRef = this.makeUserImageRef.bind(this);
   }
 
   step(timestamp){
@@ -63,10 +68,46 @@ class GameView {
       window.requestAnimationFrame(this.step)
     })
 
+    this.imageUploadPanel.addEventListener('dragenter', stopDefaults, false);
+    this.imageUploadPanel.addEventListener('dragleave', stopDefaults, false);
+    this.imageUploadPanel.addEventListener('dragover', stopDefaults, false);
+    this.imageUploadPanel.addEventListener('drop', stopDefaults , false);  
+    this.imageUploadPanel.addEventListener('drop', this.handleDrop, false);
+
     
   }
 
+  handleDrop(e){
+    let dt = e.dataTransfer;
+    let files=  dt.files;
 
+    ([...files]).forEach((file)=>{
+      let image = document.createElement('img');
+      image.classList.add('user-image');
+      // image.onload = ()=>{ URL.revokeObjectURL(image.src);}
+      image.src = URL.createObjectURL(file);
+
+      let panel = document.getElementsByClassName('image-upload-panel')[0];
+      panel.appendChild(image);
+
+      this.makeUserImageRef();
+    //   let reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.onloadend = ()=>{
+    //     let img = document.createElement('img');
+    //     img.src = reader.result;
+    //     img.classList.add('user-image');
+    //     this.makeUserImageRef();
+    //   }
+    });
+  }
+
+  makeUserImageRef(){
+    this.userImage = document.getElementsByClassName('user-image')[0];
+    this.game.userImages.push(this.userImage);
+  }
+
+  
 
   bindKeyHandlers(){
   // Object.keys(GameView.MOVES).forEach(function(k)  {
@@ -80,5 +121,13 @@ class GameView {
 
   // key("space", function () { ship.fireBullet(); });
   }
+}
+
+
+
+const stopDefaults = (e)=>{
+  e.preventDefault();
+  e.stopPropagation();
+
 }
 export default GameView;

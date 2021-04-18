@@ -36,6 +36,9 @@ class Game {
     this.sounds;
 
 
+    this.userImages = [];
+
+
     this.setupAssets();
     this.setupField();
     this.setupEntities();
