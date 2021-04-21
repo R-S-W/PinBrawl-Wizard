@@ -1,5 +1,4 @@
 import AnimationData from "./animation_data";
-import Animation from './animation';
 import Rectangle from './rectangle';
 
 

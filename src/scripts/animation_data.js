@@ -1,5 +1,17 @@
 
+/*
+Helper class used in .draw() function to help animate entities.
+Entities, Pinball flippers, and the Wizard class move and change shape with each
+iteration of game.step(), each instance being a 'frame.'
+These objects do not have gifs or an array of pictures to flip through, so there 
+are no actual frames of animation, just commands in .draw() that transform the 
+entity's png or canvas shape.  These commands cycle through transformations to 
+complete one 'cycle' of animation.
 
+AnimationData is used in the entity's .draw() function to create animation cycles 
+with more ease.  This class has the number of 'frames' and a 'frame index,' the 
+latter representing the current step in the animation cycle.
+*/
 class AnimationData {
   constructor(numFrames, type){
     this.numFrames = numFrames;
