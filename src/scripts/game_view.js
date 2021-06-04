@@ -62,7 +62,6 @@ class GameView {
   }
 
   start(){
-
     this.startButton.addEventListener('click', (e)=>{
       this.titleScreenModal.classList.add('hide')
       window.requestAnimationFrame(this.step)
@@ -73,40 +72,29 @@ class GameView {
     this.imageUploadPanel.addEventListener('dragover', stopDefaults, false);
     this.imageUploadPanel.addEventListener('drop', stopDefaults , false);  
     this.imageUploadPanel.addEventListener('drop', this.handleDrop, false);
-
-    
   }
 
-  handleDrop(e){
-    let dt = e.dataTransfer;
-    let files=  dt.files;
-
-    ([...files]).forEach((file)=>{
-      let image = document.createElement('img');
-      image.classList.add('user-image');
-      // image.onload = ()=>{ URL.revokeObjectURL(image.src);}
-      image.src = URL.createObjectURL(file);
-
-      let panel = document.getElementsByClassName('image-upload-panel')[0];
-      panel.appendChild(image);
-
-      this.makeUserImageRef();
-    //   let reader = new FileReader();
-    //   reader.readAsDataURL(file);
-    //   reader.onloadend = ()=>{
-    //     let img = document.createElement('img');
-    //     img.src = reader.result;
-    //     img.classList.add('user-image');
-    //     this.makeUserImageRef();
-    //   }
-    });
-  }
-
+  
   makeUserImageRef(){
     this.userImage = document.getElementsByClassName('user-image')[0];
     this.game.addUserEnemyInfo(this.userImage);
   }
+  
+  handleDrop(e){
+    let dt = e.dataTransfer;
+    let files =  dt.files;
+    ([...files]).forEach((file)=>{
+      let image = document.createElement('img');
+      image.classList.add('user-image');
+      let src  = URL.createObjectURL(file);
+      image.src = src;
+      
+      let panel = document.getElementsByClassName('image-upload-panel')[0];
+      panel.appendChild(image);
 
+      this.makeUserImageRef();
+    });
+  }
   
 
   bindKeyHandlers(){
