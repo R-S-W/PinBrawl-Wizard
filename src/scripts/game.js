@@ -517,6 +517,7 @@ class Game {
   }
 
   reset(){
+    console.log("In the game.reset()")
     this.livesBar.reset();
     this.successfulEnemiesCount = 0;
     this.entities = [];

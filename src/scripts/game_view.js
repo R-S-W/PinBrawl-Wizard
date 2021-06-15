@@ -18,6 +18,7 @@ class GameView {
 
     this.numWavesComplete = 0;
 
+    this.handleReset = this.handleReset.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.makeUserImageRef = this.makeUserImageRef.bind(this);
   }
@@ -50,11 +51,9 @@ class GameView {
         this.gameOverScreenSection.textContent = messageStr;
       }
       this.gameOverScreenModal.classList.remove('hide');
-      this.resetGameButton.addEventListener('click', (e)=>{
-        this.gameOverScreenModal.classList.add('hide');
-        this.game.reset();
-        window.requestAnimationFrame(this.step);
-      })
+      console.log(`aa ${this.game.isCompleted()}`)
+      
+
     }else{
       window.requestAnimationFrame(this.step);
     }
@@ -72,6 +71,17 @@ class GameView {
     this.imageUploadPanel.addEventListener('dragover', stopDefaults, false);
     this.imageUploadPanel.addEventListener('drop', stopDefaults , false);  
     this.imageUploadPanel.addEventListener('drop', this.handleDrop, false);
+
+
+    this.resetGameButton.addEventListener('click', this.handleReset)
+  }
+
+
+  handleReset(e){
+    console.log('Hit the reset game button')
+    this.gameOverScreenModal.classList.add('hide');
+    this.game.reset();
+    window.requestAnimationFrame(this.step);    
   }
 
   
@@ -94,20 +104,6 @@ class GameView {
 
       this.makeUserImageRef();
     });
-  }
-  
-
-  bindKeyHandlers(){
-  // Object.keys(GameView.MOVES).forEach(function(k)  {
-  //   const move = GameView.MOVES[k];
-  //   key(k, function () { ship.power(move); });
-  // });
-
-  // key( "z", ()=>{this.game.isLeftPressed = true});
-  // key( "/", ()=>{this.game.isRightPressed = true});
-  // key( "", ()=>{});
-
-  // key("space", function () { ship.fireBullet(); });
   }
 }
 
