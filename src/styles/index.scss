@@ -97,6 +97,27 @@ body{
   }
 
   
+  .about{
+    margin-bottom: 15px;
+    margin-top: 5px;
+    div{
+      margin-bottom: 12px;
+    }
+    a{
+      text-decoration: none;
+      color: rgb(0, 132, 255);
+      margin: 0 15px;
+      font-size: 13px;
+
+
+    }
+  }
+
+  .game-over-about{
+    transform: translateY(150px);
+  }
+
+
   nav{
     display: flex;
     width: 290px;
